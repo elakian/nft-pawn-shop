@@ -75,6 +75,9 @@ describe("Pawning", () => {
 
     expect(await pawnNFT.ownerOf(1)).to.equal(pawnShop.address);
     console.log("DONE");
+
+    const [terms, count] = await pawnShop.getWaitingTerms();
+    expect(count).to.equal(1);
   };
 
   it("basic pawn", async () => {
@@ -153,7 +156,6 @@ describe("Pawning", () => {
     await undoTermsTx.wait();
     expect(await pawnNFT.ownerOf(1)).to.equal(borrower);
   });
-  
 
   it("basic undo must be from borrower", async () => {
     await basicPawn();
@@ -174,17 +176,27 @@ describe("Pawning", () => {
 
   it("basic payment calculations with interest rate ", async () => {
     await basicPawn();
-    const currTimeStamp = Date.now() / 1000 | 0;
+    const currTimeStamp = (Date.now() / 1000) | 0;
     const earlierOneMinTimeStamp = currTimeStamp - 60; // 60 seconds prior (1 cycle) -> interest = 100000*(10/10000)*1 = 100
     const earlierTwoMinTimeStamp = currTimeStamp - 120; // 2 mins prior (2 cycles) -> interest = 100000*(10/10000)*2 = 200
 
-    const paymentAmountOneMin = await pawnShop.calculatePayment(100000, 10, 10, earlierOneMinTimeStamp);
+    const paymentAmountOneMin = await pawnShop.calculatePayment(
+      100000,
+      10,
+      10,
+      earlierOneMinTimeStamp
+    );
     const paymentAmountOneMinInt = await paymentAmountOneMin.toBigInt();
-    expect(paymentAmountOneMin.gte(100000+100)).to.equal(true);
+    expect(paymentAmountOneMin.gte(100000 + 100)).to.equal(true);
 
-    const paymentAmountTwoMin = await pawnShop.calculatePayment(100000, 10, 10, earlierTwoMinTimeStamp);
+    const paymentAmountTwoMin = await pawnShop.calculatePayment(
+      100000,
+      10,
+      10,
+      earlierTwoMinTimeStamp
+    );
     const paymentAmountTwoMinInt = await paymentAmountTwoMin.toBigInt();
-    expect(paymentAmountTwoMin.gte(100000+200)).to.equal(true);
+    expect(paymentAmountTwoMin.gte(100000 + 200)).to.equal(true);
   });
 
   // it("should do basic payment calc", async () => {
@@ -216,7 +228,7 @@ describe("Pawning", () => {
   //   const paybackBalanceLender = await accounts[1].getBalance();
   //   const paybackBalanceBorrowerInt = await paybackBalanceBorrower.toBigInt();
   //   const paybackBalanceLenderInt = await paybackBalanceLender.toBigInt();
-    
+
   //   console.log("paybackBalanceBorrowerInt: ", paybackBalanceBorrowerInt);
   //   console.log("paybackBalanceLenderInt: ", paybackBalanceLenderInt);
   //   const finalDiffBorrower = await paybackBalanceBorrower.sub(acceptBalanceBorrower).toBigInt();

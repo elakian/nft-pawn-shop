@@ -29,6 +29,7 @@ contract NFTPawnShop is IERC721Receiver, ERC721Holder {
 
     mapping(address => Terms[]) borrowersToTerms;
     mapping(address => Terms[]) lendersToTerms;
+    Terms[] allTerms;
 
     constructor() {}
 
@@ -53,6 +54,7 @@ contract NFTPawnShop is IERC721Receiver, ERC721Holder {
 
         _nftAddress.safeTransferFrom(msg.sender, address(this), _nftTokenID);
         borrowersToTerms[msg.sender].push(t);
+        allTerms.push(t);
     }
 
     function acceptTerms(address borrower, uint256 termIndex) public payable {
@@ -132,5 +134,17 @@ contract NFTPawnShop is IERC721Receiver, ERC721Holder {
         }
         payable(terms.lender).transfer(msg.value);
         terms.status = CollateralStatus.RETURNED;
+    }
+
+    function getWaitingTerms() external view returns (Terms[] memory, uint) {
+        Terms[] memory termsTemp = new Terms[](allTerms.length);
+        uint j = 0;
+        for (uint i = 0; i < allTerms.length; i++) {
+            if (allTerms[i].status == CollateralStatus.WAITING) {
+                termsTemp[j] = allTerms[i];
+                j++;
+            }
+        }
+        return (termsTemp, j);
     }
 }
