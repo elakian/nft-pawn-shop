@@ -54,7 +54,7 @@ contract NFTPawnShop is IERC721Receiver, ERC721Holder {
     }
 
     function acceptTerms(address borrower, uint256 termIndex) public payable {
-        Terms memory terms = borrowersToTerms[borrower][termIndex];
+        Terms storage terms = borrowersToTerms[borrower][termIndex];
         uint256 amount = terms.amountInWei;
         require(amount == msg.value, 'need to send the required wei');
         payable(terms.borrower).transfer(msg.value);
