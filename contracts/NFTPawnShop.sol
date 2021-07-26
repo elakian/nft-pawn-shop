@@ -63,4 +63,16 @@ contract NFTPawnShop is IERC721Receiver, ERC721Holder {
         terms.startTime = block.timestamp;
         lendersToTerms[msg.sender].push(terms);
     }
+
+    function claimCollateral(uint256 termIndex) external {
+        Terms storage terms = lendersToTerms[msg.sender][termIndex];
+        require(terms.lender == msg.sender, 'you must be the lender');
+        require(
+            block.timestamp > terms.startTime + terms.duration, 
+            'pay back date should be in past'
+        );
+        require (terms.status == CollateralStatus.ACTIVE, 'should be active');
+        terms.nftAddress.safeTransferFrom(address(this), msg.sender, terms.nftTokenID);
+        terms.status = CollateralStatus.DEFAULTED;
+    }
 }

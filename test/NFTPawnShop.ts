@@ -1,4 +1,4 @@
-import { ethers } from "hardhat";
+import { ethers, network } from "hardhat";
 import { Signer } from "ethers";
 import { expect } from "chai";
 import { Contract } from "ethers";
@@ -6,6 +6,7 @@ import { Contract } from "ethers";
 describe("Pawning", () => {
   let accounts: Signer[];
   let pawnShop: Contract;
+  let pawnNFT: Contract;
 
   beforeEach(async () => {
     accounts = await ethers.getSigners();
@@ -22,7 +23,7 @@ describe("Pawning", () => {
     const PawnNFT = await ethers.getContractFactory("PawnNFT");
 
     pawnShop = await NFTPawnShop.deploy();
-    const pawnNFT = await PawnNFT.deploy("PawnNFT", "PWN");
+    pawnNFT = await PawnNFT.deploy("PawnNFT", "PWN");
 
     console.log("made pawnNFT");
     console.log("this is panwShop address: ");
@@ -104,5 +105,44 @@ describe("Pawning", () => {
     } catch (e) {
       expect(true);
     }
+  });
+
+  it("claim collateral after due date", async () => {
+    await basicPawn();
+    const borrower = await accounts[0].getAddress();
+    const acceptTermsTx = await pawnShop
+      .connect(accounts[1]) // loaner
+      .acceptTerms(borrower, 0, { value: 100000000 });
+    await acceptTermsTx.wait();
+    await network.provider.send("evm_increaseTime", [4000]);
+    expect(await pawnNFT.ownerOf(1)).to.not.equal(
+      await accounts[1].getAddress()
+    );
+    const claimTx = await pawnShop
+      .connect(accounts[1]) // loaner
+      .claimCollateral(0);
+    await claimTx.wait();
+    expect(await pawnNFT.ownerOf(1)).to.equal(await accounts[1].getAddress());
+  });
+
+  it("claim collateral before due date", async () => {
+    await basicPawn();
+    const borrower = await accounts[0].getAddress();
+    const acceptTermsTx = await pawnShop
+      .connect(accounts[1]) // loaner
+      .acceptTerms(borrower, 0, { value: 100000000 });
+    await acceptTermsTx.wait();
+    try {
+      const claimTx = await pawnShop
+        .connect(accounts[1]) // loaner
+        .claimCollateral(0);
+      await claimTx.wait();
+      expect(false);
+    } catch (e) {
+      expect(true);
+    }
+    expect(await pawnNFT.ownerOf(1)).to.not.equal(
+      await accounts[1].getAddress()
+    );
   });
 });

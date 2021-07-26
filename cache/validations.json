@@ -82,6 +82,190 @@
       "NFTPawnShop": {
         "src": "contracts/NFTPawnShop.sol:8",
         "version": {
+          "withMetadata": "f8c6749fee2f2b3d6be9d49d555fd0027cb7dc72d04b60296f7ff701473c80d2",
+          "withoutMetadata": "c28d9f7f27cbe1d33f685b012bfc454b2145e60c5157e5e8ee508bb0906cb010",
+          "linkedWithoutMetadata": "c28d9f7f27cbe1d33f685b012bfc454b2145e60c5157e5e8ee508bb0906cb010"
+        },
+        "inherit": [
+          "ERC721Holder",
+          "IERC721Receiver"
+        ],
+        "libraries": [],
+        "methods": [
+          "()",
+          "pawn(address,uint256,uint256,uint256,uint256)",
+          "acceptTerms(address,uint256)",
+          "claimCollateral(uint256)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [
+            {
+              "contract": "NFTPawnShop",
+              "label": "borrowersToTerms",
+              "type": "t_mapping(t_address,t_array(t_struct(Terms)207_storage)dyn_storage)",
+              "src": "contracts/NFTPawnShop.sol:28"
+            },
+            {
+              "contract": "NFTPawnShop",
+              "label": "lendersToTerms",
+              "type": "t_mapping(t_address,t_array(t_struct(Terms)207_storage)dyn_storage)",
+              "src": "contracts/NFTPawnShop.sol:29"
+            }
+          ],
+          "types": {
+            "t_mapping(t_address,t_array(t_struct(Terms)207_storage)dyn_storage)": {
+              "label": "mapping(address => struct NFTPawnShop.Terms[])"
+            },
+            "t_address": {
+              "label": "address"
+            },
+            "t_array(t_struct(Terms)207_storage)dyn_storage": {
+              "label": "struct NFTPawnShop.Terms[]"
+            },
+            "t_struct(Terms)207_storage": {
+              "label": "struct NFTPawnShop.Terms",
+              "members": [
+                {
+                  "label": "nftAddress",
+                  "type": "t_contract(IERC721)115"
+                },
+                {
+                  "label": "nftTokenID",
+                  "type": "t_uint256"
+                },
+                {
+                  "label": "amountInWei",
+                  "type": "t_uint256"
+                },
+                {
+                  "label": "interestRate",
+                  "type": "t_uint256"
+                },
+                {
+                  "label": "startTime",
+                  "type": "t_uint256"
+                },
+                {
+                  "label": "duration",
+                  "type": "t_uint256"
+                },
+                {
+                  "label": "borrower",
+                  "type": "t_address"
+                },
+                {
+                  "label": "lender",
+                  "type": "t_address"
+                },
+                {
+                  "label": "status",
+                  "type": "t_enum(CollateralStatus)186"
+                }
+              ]
+            },
+            "t_contract(IERC721)115": {
+              "label": "contract IERC721"
+            },
+            "t_uint256": {
+              "label": "uint256"
+            },
+            "t_enum(CollateralStatus)186": {
+              "label": "enum NFTPawnShop.CollateralStatus",
+              "members": [
+                "WAITING",
+                "ACTIVE",
+                "RETURNED",
+                "DEFAULTED"
+              ]
+            }
+          },
+          "layoutVersion": "1.1"
+        }
+      }
+    },
+    {
+      "IERC721": {
+        "src": "@openzeppelin/contracts/token/ERC721/IERC721.sol:10",
+        "inherit": [
+          "IERC165"
+        ],
+        "libraries": [],
+        "methods": [
+          "balanceOf(address)",
+          "ownerOf(uint256)",
+          "safeTransferFrom(address,address,uint256)",
+          "transferFrom(address,address,uint256)",
+          "approve(address,uint256)",
+          "getApproved(uint256)",
+          "setApprovalForAll(address,bool)",
+          "isApprovedForAll(address,address)",
+          "safeTransferFrom(address,address,uint256,bytes)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1"
+        }
+      },
+      "IERC721Receiver": {
+        "src": "@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol:10",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "onERC721Received(address,address,uint256,bytes)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1"
+        }
+      },
+      "ERC721Holder": {
+        "src": "@openzeppelin/contracts/token/ERC721/utils/ERC721Holder.sol:13",
+        "version": {
+          "withMetadata": "00424b6c71a3f5140869c97795518dddea90efc7156b573e8ec6dca8115ef457",
+          "withoutMetadata": "fd593a2425c3ddc601e910a1ec9c85223b871631d8766db914e4c74a20421acf",
+          "linkedWithoutMetadata": "fd593a2425c3ddc601e910a1ec9c85223b871631d8766db914e4c74a20421acf"
+        },
+        "inherit": [
+          "IERC721Receiver"
+        ],
+        "libraries": [],
+        "methods": [
+          "onERC721Received(address,address,uint256,bytes)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1"
+        }
+      },
+      "IERC165": {
+        "src": "@openzeppelin/contracts/utils/introspection/IERC165.sol:14",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "supportsInterface(bytes4)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1"
+        }
+      },
+      "NFTPawnShop": {
+        "src": "contracts/NFTPawnShop.sol:8",
+        "version": {
           "withMetadata": "817a31fc06b01413ccfb6c1eee061cef8ebf3255c1a25823b7831753dac0cee6",
           "withoutMetadata": "e77c65c74b121f0868156d06af67e473726406428ebcf3c06fc3547419d3e969",
           "linkedWithoutMetadata": "e77c65c74b121f0868156d06af67e473726406428ebcf3c06fc3547419d3e969"
