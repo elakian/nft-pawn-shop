@@ -1,0 +1,21 @@
+.top-bar {
+  background: #ffffff;
+  box-shadow: 0px 9px 15px rgba(99, 112, 124, 0.07);
+  height: 64px;
+  width: 100%;
+  //   display: flex;
+  //   justify-content: space-between;
+  //   align-items: center;
+}
+
+body {
+  margin: 0;
+  //   background-color: #d6d3ff;
+}
+
+.top-bar-contents-name {
+  color: #c7c7c7;
+  font-size: 18px;
+  padding-right: 36px;
+  padding-left: 120px;
+}

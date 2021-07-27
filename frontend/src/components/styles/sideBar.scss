@@ -1,0 +1,42 @@
+.side-bar-container {
+  background-color: #a29bfe;
+  box-shadow: 9px 0px 15px rgba(99, 112, 124, 0.07);
+  color: white;
+  min-width: 312px;
+  height: 100vh;
+  font-size: 16px;
+  font-family: "Rubik", sans-serif;
+  font-weight: bold;
+}
+
+.side-bar-nav-tabs-all {
+  padding-top: 20px;
+  padding-bottom: 40px;
+}
+
+.side-bar-nav-tab-item-contents-name {
+  padding-top: 2px;
+}
+
+.side-bar-nav-tab-item-contents:hover {
+  display: flex;
+  padding: 16px 20px;
+  border-radius: 10px;
+  background-color: #fd79a8;
+}
+
+.side-bar-nav-tab-item {
+  cursor: pointer;
+  padding: 16px 20px;
+  border-radius: 10px;
+}
+
+.side-bar-nav-tab-item-selected {
+  font-weight: bold;
+}
+.side-bar-nav-tab-item-contents-selected {
+  display: flex;
+  background-color: #fd79a8;
+  padding: 16px 20px;
+  border-radius: 10px;
+}

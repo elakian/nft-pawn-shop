@@ -1,34 +1,47 @@
-import React from 'react';
+import React from "react";
 import { connect } from "react-redux";
 import { getAccountState, getContractState } from "../redux/selectors";
 import { AccountState } from "../redux/reducers/AccountReducer";
-import { ContractState } from "../redux/reducers/ContractReducer";
-import ConnectWallet from "./ConnectWallet";
-import NFTPawnShopJSON from "../NFTPawnShop.json";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from "react-router-dom";
+
+import Home from "./Home";
+import SideBar from "./SideBar";
+import TopBar from "./TopBar";
 
 interface Props {
-  accountState: AccountState,
-  contractState: ContractState,
+  accountState: AccountState;
 }
 
 function Dapp(props: Props) {
-  if (!props.accountState.selectedAddress || !props.contractState.nftPawnShopContract) {
-    return (
-      <ConnectWallet />
-    );
-  }
   return (
-    <div>
-  <div> 
-  Connected! address is : {props.accountState.selectedAddress} <b></b>
-  and network is : {props.accountState.selectedNetwork}
-  </div>
-  <div>
-    Pawnshop contract address is this: {props.contractState.nftPawnShopContract.address} <b></b>
-    and NFT contract address is this: {props.contractState.pawnNftContract.address}
-  </div>
-
-  </div>
+    <Router>
+      <div>
+        <TopBar />
+      </div>
+      <div style={{ display: "flex" }}>
+        <div>
+          {/* <SideBar /> */}
+          <Switch>
+            <Route path="/" component={SideBar} />
+          </Switch>
+        </div>
+        <div>
+          <Switch>
+            <Route path="/home" component={Home} />
+            <Route path="/pawned" component={Home} />
+            <Route path="/loans" component={Home} />
+            <Route path="/">
+              <Redirect to="/home" />
+            </Route>
+          </Switch>
+        </div>
+      </div>
+    </Router>
   );
 }
 
@@ -39,8 +52,7 @@ const mapStateToProps = (state: any, ownProps: any) => ({
 });
 
 const mapDispatchToProps = (dispatch: any) => {
-  return {
-  };
+  return {};
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Dapp);
