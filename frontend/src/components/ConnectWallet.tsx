@@ -10,7 +10,11 @@ interface Props {
 function ConnectWallet(props: Props) {
 
     const connectWallet = async () => {
-        const [selectedAddress] = await (window as any).ethereum.enable();
+
+        const provider = new ethers.providers.Web3Provider((window as any).ethereum, "any");
+        await provider.send("eth_requestAccounts", []);
+        const signer = provider.getSigner();
+        const selectedAddress = await signer.getAddress()
         const selectedNetwork = (window as any).ethereum.networkVersion;
         props.setAccountDetails({selectedAddress, selectedNetwork});
     }

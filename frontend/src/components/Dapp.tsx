@@ -1,5 +1,4 @@
 import React from 'react';
-
 import { connect } from "react-redux";
 import { getAccountState } from "../redux/selectors";
 import { AccountState } from "../redux/reducers/AccountReducer";
@@ -16,7 +15,9 @@ function Dapp(props: Props) {
     );
   }
   return (
-  <div> Connected! address is : {props.accountState.selectedAddress}</div>
+  <div> 
+  Connected! address is : {props.accountState.selectedAddress}
+  and network is : {props.accountState.selectedNetwork}</div>
   );
 }
 
