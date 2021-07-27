@@ -16,11 +16,11 @@ export const tabs: Array<Tab> = [
     url: "home",
   },
   {
-    name: "Pawned NFTs",
+    name: "My Pawned NFTs",
     url: "pawned",
   },
   {
-    name: "Loans Given",
+    name: "My Loans Given",
     url: "loans",
   },
 ];

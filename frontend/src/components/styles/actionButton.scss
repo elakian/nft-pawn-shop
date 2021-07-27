@@ -1,0 +1,37 @@
+.action-button {
+  align-items: flex-start;
+  background-color: #fd79a8;
+  border-radius: 12px;
+  cursor: pointer;
+  height: 48px;
+  width: 150px;
+  color: white;
+  font-weight: bold;
+  font-size: 16px;
+  text-align: center;
+  line-height: 48px;
+  font-family: "Rubik", sans-serif;
+}
+
+.action-button:hover {
+  background-color: rgb(180, 120, 141);
+}
+
+.action-button-alt {
+  align-items: flex-start;
+  background-color: #7268ff;
+  border-radius: 12px;
+  cursor: pointer;
+  height: 48px;
+  width: 100px;
+  color: white;
+  font-weight: bold;
+  font-size: 16px;
+  text-align: center;
+  line-height: 48px;
+  font-family: "Rubik", sans-serif;
+}
+
+.action-button-alt:hover {
+  background-color: #afaaf8;
+}
