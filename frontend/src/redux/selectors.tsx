@@ -1,0 +1,1 @@
+export const getAccountState = (store: any) => store.accountState;

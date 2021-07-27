@@ -1,0 +1,6 @@
+// Message
+const SET_ACCOUNT_DETAILS = "SET_ACCOUNT_DETAILS";
+
+export {
+    SET_ACCOUNT_DETAILS
+}
