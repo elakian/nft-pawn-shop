@@ -1,5 +1,4 @@
 import { SET_PAWN_SHOP_CONTRACTS } from "../actionTypes";
-import { ethers } from "ethers";  
 
 export interface ContractState {
     nftPawnShopContract: any,
@@ -10,7 +9,6 @@ const initialState: ContractState = {
     nftPawnShopContract: null,
     pawnNftContract: null,
 };
-  
   
 const ContractReducer = (state = initialState, action: any) => {
     switch (action.type) {

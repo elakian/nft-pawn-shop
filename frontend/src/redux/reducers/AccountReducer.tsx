@@ -12,7 +12,6 @@ const initialState: AccountState = {
     provider: null
 };
   
-  
 const AccountReducer = (state = initialState, action: any) => {
     switch (action.type) {
         case SET_ACCOUNT_DETAILS: {

@@ -7,13 +7,18 @@ import { AccountState } from "../redux/reducers/AccountReducer";
 import { connect } from "react-redux";
 
 import "./styles/topBar.scss";
+import "./styles/connectWallet.scss";
 
 interface Props {
   accountState: AccountState;
 }
 
 function TopBar(props: Props) {
-  let connectButton = null;
+  let connectButton = (
+    <div className="connect-wallet-button">
+      Connected!
+    </div>
+  );
   if (!props.accountState.selectedAddress) {
     connectButton = <ConnectWallet />;
   }
