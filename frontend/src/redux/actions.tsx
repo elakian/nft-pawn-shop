@@ -1,5 +1,8 @@
-import {SET_ACCOUNT_DETAILS} from "./actionTypes";
+import { 
+    SET_ACCOUNT_DETAILS, 
+    SET_PAWN_SHOP_CONTRACTS } from "./actionTypes";
 import { AccountState } from "./reducers/AccountReducer";
+import { ContractState } from "./reducers/ContractReducer";
 
 export const setAccountDetails = (account: AccountState) => ({
     type: SET_ACCOUNT_DETAILS,
@@ -7,3 +10,11 @@ export const setAccountDetails = (account: AccountState) => ({
       ...account,
     },
 });
+
+export const setContractDetails = (contract: ContractState) => ({
+    type: SET_PAWN_SHOP_CONTRACTS,
+    payload: {
+      ...contract,
+    },
+});
+

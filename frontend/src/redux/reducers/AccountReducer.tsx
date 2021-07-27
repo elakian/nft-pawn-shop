@@ -2,12 +2,14 @@ import { SET_ACCOUNT_DETAILS } from "../actionTypes";
   
 export interface AccountState {
     selectedAddress: String,
-    selectedNetwork: String
+    selectedNetwork: String,
+    provider: any
 }
 
 const initialState: AccountState = {
     selectedAddress: "",
     selectedNetwork: "",
+    provider: null
 };
   
   
@@ -17,6 +19,7 @@ const AccountReducer = (state = initialState, action: any) => {
           return {
             selectedAddress: action.payload.selectedAddress,
             selectedNetwork: action.payload.selectedNetwork,
+            provider: action.payload.provider,
           };
         }
       }

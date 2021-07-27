@@ -1,10 +1,13 @@
 import React from 'react';
 import { ethers } from "ethers";
 import { connect } from "react-redux";
-import { setAccountDetails } from "../redux/actions";
+import { setAccountDetails, setContractDetails } from "../redux/actions";
+import NFTPawnShopJSON from "../NFTPawnShop.json";
+import PawnNFTJSON from "../PawnNFT.json";
 
 interface Props {
     setAccountDetails: Function,
+    setContractDetails: Function,
 }
 
 function ConnectWallet(props: Props) {
@@ -14,9 +17,12 @@ function ConnectWallet(props: Props) {
         const provider = new ethers.providers.Web3Provider((window as any).ethereum, "any");
         await provider.send("eth_requestAccounts", []);
         const signer = provider.getSigner();
-        const selectedAddress = await signer.getAddress()
+        const selectedAddress = await signer.getAddress();
         const selectedNetwork = (window as any).ethereum.networkVersion;
+        const nftPawnShopContract = new ethers.Contract(NFTPawnShopJSON.address, NFTPawnShopJSON.abi, signer);
+        const pawnNftContract = new ethers.Contract(PawnNFTJSON.address, PawnNFTJSON.abi, signer);
         props.setAccountDetails({selectedAddress, selectedNetwork});
+        props.setContractDetails({nftPawnShopContract, pawnNftContract});
     }
 
     return (
@@ -40,6 +46,7 @@ const mapStateToProps = (state: any, ownProps: any) => ({
 const mapDispatchToProps = (dispatch: any) => {
     return {
         setAccountDetails: (params: any) => dispatch(setAccountDetails(params)),
+        setContractDetails: (params: any) => dispatch(setContractDetails(params)),
     };
 };
   
