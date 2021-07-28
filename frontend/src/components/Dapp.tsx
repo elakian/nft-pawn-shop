@@ -10,6 +10,8 @@ import {
 } from "react-router-dom";
 
 import Home from "./Home";
+import MyPawnedNFTs from "./MyPawnedNFTs";
+import MyLoans from "./MyLoans";
 import SideBar from "./SideBar";
 import TopBar from "./TopBar";
 import Mint from "./Mint";
@@ -34,8 +36,8 @@ function Dapp(props: Props) {
         <div>
           <Switch>
             <Route path="/home" component={Home} />
-            <Route path="/pawned" component={Home} />
-            <Route path="/loans" component={Home} />
+            <Route path="/pawned" component={MyPawnedNFTs} />
+            <Route path="/loans" component={MyLoans} />
             <Route path="/mint" component={Mint} />
 
             <Route path="/">
