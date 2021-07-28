@@ -1,4 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+
+import { connect } from "react-redux";
+import { getAccountState, getContractState } from "../redux/selectors";
+import { AccountState } from "../redux/reducers/AccountReducer";
+import { ContractState } from "../redux/reducers/ContractReducer";
 
 import ActionButton from "./ActionButton";
 import AddPawnDialog from "./AddPawnDialog";
@@ -6,8 +11,27 @@ import ListCardItem from "./ListCardItem";
 
 import "./styles/home.scss";
 
-function Home() {
+interface Props {
+  accountState: AccountState;
+  contractState: ContractState;
+}
+
+function Home(props: Props) {
   const [showDialog, setShowDialog] = useState(false);
+  const { contractState } = props;
+  useEffect(() => {
+    const func = async () => {
+      try {
+        const terms = await contractState.nftPawnShopContract.getWaitingTerms();
+        console.log("terms", terms);
+      } catch (e: any) {
+        console.log("e", e);
+      }
+    };
+    if (contractState.nftPawnShopContract) {
+      func();
+    }
+  }, [contractState]);
   const onClickPawn = () => {
     setShowDialog(!showDialog);
   };
@@ -48,4 +72,14 @@ function Home() {
   );
 }
 
-export default Home;
+const mapStateToProps = (state: any, ownProps: any) => ({
+  ...ownProps,
+  accountState: getAccountState(state),
+  contractState: getContractState(state),
+});
+
+const mapDispatchToProps = (dispatch: any) => {
+  return {};
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
