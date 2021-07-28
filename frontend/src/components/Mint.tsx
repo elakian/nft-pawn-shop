@@ -1,8 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { AccountState } from "../redux/reducers/AccountReducer";
 import { ContractState } from "../redux/reducers/ContractReducer";
 import { connect } from "react-redux";
-import { setAccountDetails, setContractDetails } from "../redux/actions";
 import { getAccountState, getContractState } from "../redux/selectors";
 
 import ActionButton from "./ActionButton";
@@ -11,8 +10,6 @@ import CustomInput from "./CustomInput";
 import "./styles/mint.scss";
 
 interface Props {
-  setAccountDetails: Function;
-  setContractDetails: Function;
   accountState: AccountState;
   contractState: ContractState;
 }
@@ -20,11 +17,27 @@ interface Props {
 function Mint(props: Props) {
   console.log(props.accountState);
   console.log(props.contractState);
-  //   if (props.accountState.selectedAddress == "") {
-  //     return (
-  //       <div className="mint-not-connected">Please connect your wallet!</div>
-  //     );
-  //   }
+  const [tokenID, setTokenID] = useState("");
+  if (props.accountState.selectedAddress == "") {
+    return (
+      <div className="mint-not-connected">Please connect your wallet!</div>
+    );
+  }
+  const onClickMint = async () => {
+    try {
+      const tx = await props.contractState.pawnNftContract.mint(
+        props.accountState.selectedAddress,
+        Number(tokenID)
+      );
+      await tx.wait();
+      console.log("Minted!");
+    } catch (e: any) {
+      console.log("error", e);
+    }
+  };
+  const onChangeTokenID = (e: any) => {
+    setTokenID(e.target.value);
+  };
 
   return (
     <div style={{ padding: "12px" }}>
@@ -32,9 +45,13 @@ function Mint(props: Props) {
         {" "}
         Token ID
       </div>
-      <CustomInput placeholder="Enter number" />
+      <CustomInput
+        placeholder="Enter number"
+        value={tokenID}
+        onChange={onChangeTokenID}
+      />
       <div style={{ paddingTop: "12px" }}>
-        <ActionButton label="Submit" onClick={() => {}} />
+        <ActionButton label="Mint" onClick={onClickMint} />
       </div>
     </div>
   );
@@ -47,10 +64,7 @@ const mapStateToProps = (state: any, ownProps: any) => ({
 });
 
 const mapDispatchToProps = (dispatch: any) => {
-  return {
-    setAccountDetails: (params: any) => dispatch(setAccountDetails(params)),
-    setContractDetails: (params: any) => dispatch(setContractDetails(params)),
-  };
+  return {};
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Mint);
