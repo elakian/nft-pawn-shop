@@ -1,15 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
 
 import ActionButton from "./ActionButton";
+import AddPawnDialog from "./AddPawnDialog";
 import ListCardItem from "./ListCardItem";
 
 import "./styles/home.scss";
 
 function Home() {
+  const [showDialog, setShowDialog] = useState(false);
+  const onClickPawn = () => {
+    setShowDialog(!showDialog);
+  };
+  const onClose = () => {
+    setShowDialog(false);
+  };
   return (
     <div>
+      <AddPawnDialog show={showDialog} onClose={onClose} />
       <div style={{ paddingLeft: "16px", paddingTop: "24px" }}>
-        <ActionButton label="+ Pawn NFT" onClick={() => {}} />
+        <ActionButton label="+ Pawn NFT" onClick={onClickPawn} />
       </div>
 
       <div style={{ paddingLeft: "16px", paddingTop: "36px" }}>
