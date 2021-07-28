@@ -10,5 +10,5 @@ export default combineReducers({
   contractState: ContractReducer,
   loanState: LoanReducer,
   nftState: NFTReducer,
-  pawnState: PawnReducer
+  pawnState: PawnReducer,
 });

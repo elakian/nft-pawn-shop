@@ -1,22 +1,22 @@
 import { SET_PAWNS } from "../actionTypes";
 
 export interface PawnState {
-    pawns: any,
+  pawns: any;
 }
 
 const initialState: PawnState = {
-    pawns: null,
+  pawns: null,
 };
-  
+
 const PawnReducer = (state = initialState, action: any) => {
-    switch (action.type) {
-        case SET_PAWNS: {
-          return {
-            pawns: action.payload.pawns
-          };
-        }
-      }
-      return state;
-    };
-  
+  switch (action.type) {
+    case SET_PAWNS: {
+      return {
+        pawns: action.payload.pawns,
+      };
+    }
+  }
+  return state;
+};
+
 export default PawnReducer;
