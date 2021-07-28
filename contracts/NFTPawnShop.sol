@@ -25,6 +25,7 @@ contract NFTPawnShop is IERC721Receiver, ERC721Holder {
         address borrower;
         address lender;
         CollateralStatus status;
+        uint256 index;
     }
 
     mapping(address => Terms[]) borrowersToTerms;
@@ -49,7 +50,8 @@ contract NFTPawnShop is IERC721Receiver, ERC721Holder {
             _duration,
             msg.sender,
             address(0x0),
-            CollateralStatus.WAITING
+            CollateralStatus.WAITING,
+            borrowersToTerms[msg.sender].length
         );
 
         _nftAddress.safeTransferFrom(msg.sender, address(this), _nftTokenID);
@@ -99,7 +101,6 @@ contract NFTPawnShop is IERC721Receiver, ERC721Holder {
     /// @dev calculate amount of payment required - interest rate in bps
     function calculatePayment(
         uint256 _amountInWei,
-        uint256 _duration,
         uint256 _interestRate,
         uint256 _startTime
     ) public view returns (uint256 amount) {
@@ -123,7 +124,6 @@ contract NFTPawnShop is IERC721Receiver, ERC721Holder {
         Terms memory terms = borrowersToTerms[_borrower][termIndex];
         uint256 payment = calculatePayment(
             terms.amountInWei,
-            terms.duration,
             terms.interestRate,
             terms.startTime
         );

@@ -163,7 +163,6 @@ describe("Pawning", () => {
     const paymentAmountOneMin = await pawnShop.calculatePayment(
       100000,
       10,
-      10,
       earlierOneMinTimeStamp
     );
     const paymentAmountOneMinInt = await paymentAmountOneMin.toBigInt();
@@ -171,7 +170,6 @@ describe("Pawning", () => {
 
     const paymentAmountTwoMin = await pawnShop.calculatePayment(
       100000,
-      10,
       10,
       earlierTwoMinTimeStamp
     );
