@@ -13,42 +13,28 @@ describe("Pawning", () => {
   });
 
   const basicPawn = async () => {
-    console.log("starting basic pawn");
-
     const owner = await accounts[0].getAddress();
-    console.log("this is owner address: ");
-    console.log(owner);
-
     const NFTPawnShop = await ethers.getContractFactory("NFTPawnShop");
     const PawnNFT = await ethers.getContractFactory("PawnNFT");
 
     pawnShop = await NFTPawnShop.deploy();
     pawnNFT = await PawnNFT.deploy("PawnNFT", "PWN");
 
-    console.log("made pawnNFT");
-    console.log("this is panwShop address: ");
-    console.log(pawnShop.address);
-
     await pawnNFT.deployed();
     expect(await pawnNFT.name()).to.equal("PawnNFT");
     expect(await pawnNFT.symbol()).to.equal("PWN");
 
-    console.log("checked basic NFT");
-
     // NFT mint to owner
     const pawnNFTxn = await pawnNFT.mint(owner, 1, { from: owner });
     await pawnNFTxn.wait();
-    console.log("good with pawnNFTxn");
 
     expect(await pawnNFT.ownerOf(1)).to.equal(owner);
-    console.log("starting pawnNFTApprove");
 
     // Approve pawnShop address from owner
     const pawnNFTApprove = await pawnNFT.approve(pawnShop.address, 1, {
       from: owner,
     });
     await pawnNFTApprove.wait();
-    console.log("good with pawnNFTApprove");
 
     const nftAddress = pawnNFT.address;
     const nftTokenID = 1;
@@ -68,13 +54,7 @@ describe("Pawning", () => {
     // wait for transaction to be mined
     await pawnTX.wait();
 
-    console.log("good with pawnTX");
-
-    console.log("pawnNFT owner of 1: ", pawnNFT.ownerOf(1));
-    console.log("pawnShop address: ", pawnShop.address);
-
     expect(await pawnNFT.ownerOf(1)).to.equal(pawnShop.address);
-    console.log("DONE");
 
     const [terms, count] = await pawnShop.getWaitingTerms();
     expect(count).to.equal(1);
@@ -221,7 +201,9 @@ describe("Pawning", () => {
     console.log("acceptBalanceBorrowerInt: ", acceptBalanceBorrowerInt);
     console.log("acceptBalanceLenderInt: ", acceptBalanceLenderInt);
 
-    const paybackTermsTx = await pawnShop.connect(accounts[0]).paybackTerm(borrower, 0, { value: 110000000});
+    const paybackTermsTx = await pawnShop
+      .connect(accounts[0])
+      .paybackTerm(borrower, 0, { value: 110000000 });
     await paybackTermsTx.wait();
 
     const paybackBalanceBorrower = await accounts[0].getBalance();
@@ -231,10 +213,16 @@ describe("Pawning", () => {
 
     console.log("paybackBalanceBorrowerInt: ", paybackBalanceBorrowerInt);
     console.log("paybackBalanceLenderInt: ", paybackBalanceLenderInt);
-    const finalDiffBorrower = await paybackBalanceBorrower.sub(acceptBalanceBorrower).toBigInt();
+    const finalDiffBorrower = await paybackBalanceBorrower
+      .sub(acceptBalanceBorrower)
+      .toBigInt();
     console.log("This is final diff for borrower side: ", finalDiffBorrower);
-    const finalDiffLender = await paybackBalanceLender.sub(acceptBalanceLender).toBigInt();
+    const finalDiffLender = await paybackBalanceLender
+      .sub(acceptBalanceLender)
+      .toBigInt();
     console.log("This is final diff for lender side: ", finalDiffLender);
-    expect(paybackBalanceLender.sub(acceptBalanceLender).eq(110000000)).to.equal(true);
+    expect(
+      paybackBalanceLender.sub(acceptBalanceLender).eq(110000000)
+    ).to.equal(true);
   });
 });

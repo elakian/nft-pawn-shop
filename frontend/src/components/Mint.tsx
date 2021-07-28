@@ -18,7 +18,7 @@ function Mint(props: Props) {
   console.log(props.accountState);
   console.log(props.contractState);
   const [tokenID, setTokenID] = useState("");
-  if (props.accountState.selectedAddress == "") {
+  if (props.accountState.selectedAddress === "") {
     return (
       <div className="mint-not-connected">Please connect your wallet!</div>
     );
