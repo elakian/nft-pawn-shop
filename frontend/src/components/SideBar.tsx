@@ -23,6 +23,10 @@ export const tabs: Array<Tab> = [
     name: "My Loans Given",
     url: "loans",
   },
+  {
+    name: "Mint",
+    url: "mint",
+  },
 ];
 
 interface Props {}

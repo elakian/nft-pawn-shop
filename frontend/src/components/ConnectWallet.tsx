@@ -14,7 +14,7 @@ interface Props {
   setAccountDetails: Function;
   setContractDetails: Function;
   accountState: AccountState;
-  ContractState: ContractState;
+  contractState: ContractState;
 }
 
 function ConnectWallet(props: Props) {
@@ -27,10 +27,18 @@ function ConnectWallet(props: Props) {
     const signer = provider.getSigner();
     const selectedAddress = await signer.getAddress();
     const selectedNetwork = (window as any).ethereum.networkVersion;
-    const nftPawnShopContract = new ethers.Contract(NFTPawnShopJSON.address, NFTPawnShopJSON.abi, signer);
-    const pawnNftContract = new ethers.Contract(PawnNFTJSON.address, PawnNFTJSON.abi, signer);
-    props.setAccountDetails({selectedAddress, selectedNetwork});
-    props.setContractDetails({nftPawnShopContract, pawnNftContract});
+    const nftPawnShopContract = new ethers.Contract(
+      NFTPawnShopJSON.address,
+      NFTPawnShopJSON.abi,
+      signer
+    );
+    const pawnNftContract = new ethers.Contract(
+      PawnNFTJSON.address,
+      PawnNFTJSON.abi,
+      signer
+    );
+    props.setAccountDetails({ selectedAddress, selectedNetwork });
+    props.setContractDetails({ nftPawnShopContract, pawnNftContract });
   };
 
   return (
@@ -40,8 +48,6 @@ function ConnectWallet(props: Props) {
       </div>
     </div>
   );
-
-    
 }
 
 const mapStateToProps = (state: any, ownProps: any) => ({

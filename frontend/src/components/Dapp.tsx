@@ -12,6 +12,7 @@ import {
 import Home from "./Home";
 import SideBar from "./SideBar";
 import TopBar from "./TopBar";
+import Mint from "./Mint";
 
 interface Props {
   accountState: AccountState;
@@ -35,6 +36,8 @@ function Dapp(props: Props) {
             <Route path="/home" component={Home} />
             <Route path="/pawned" component={Home} />
             <Route path="/loans" component={Home} />
+            <Route path="/mint" component={Mint} />
+
             <Route path="/">
               <Redirect to="/home" />
             </Route>
