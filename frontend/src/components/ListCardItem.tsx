@@ -8,10 +8,12 @@ interface Props {
   headers: Array<string>;
   content: Array<string>;
   ctaLabel?: string;
+  value?: string;
   onClickCta?: Function;
 }
 
 function ListCardItem(props: Props) {
+  console.log("in ListCardItem.. this is value: ", props.value);
   const headers = props.headers.map((ele, i) => (
     <th key={i} align="left">
       {ele}

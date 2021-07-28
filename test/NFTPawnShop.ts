@@ -223,4 +223,23 @@ describe("Pawning", () => {
       paybackBalanceLender.sub(acceptBalanceLender).eq(110000000)
     ).to.equal(true);
   });
+
+  it("basic lender check", async () => {
+    await basicPawn();
+    const borrower = await accounts[0].getAddress();
+    const lender = await accounts[1].getAddress();
+    const acceptTermsTx = await pawnShop
+      .connect(accounts[1]) // loaner
+      .acceptTerms(borrower, 0, { value: 100000000 });
+    await acceptTermsTx.wait();
+    const loans = await pawnShop.getLoans(lender);
+    console.log("this is loans[0].status: ", loans[0].status);
+    expect((loans.length == 1));
+    expect((loans[0].address == lender));
+    expect((loans[0].borrower == borrower));
+    expect((loans[0].status == 1));
+    const [terms, count] = await pawnShop.getWaitingTerms();
+    console.log("this is waiting terms: ", terms);
+    expect(count).to.equal(0);
+  });
 });

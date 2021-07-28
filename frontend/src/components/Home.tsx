@@ -63,7 +63,25 @@ function Home(props: Props) {
       _status,
       index,
     ] = term;
-    const onClickAccept = () => {};
+    const onClickAccept = async (borrower: string, index: any, amountInWei: string) => {
+      console.log("clicked accept..");
+      console.log("this is borrower: ", borrower);
+      console.log("this is index: ", index.toNumber());
+      console.log("this is amountInWei: ", BigInt(amountInWei.toString()));
+      const indexNum = index.toNumber();
+      const wei = BigInt(amountInWei.toString());
+      try {
+        const tx = await props.contractState.nftPawnShopContract.acceptTerms(
+          borrower,
+          indexNum,
+          {from: props.accountState.selectedAddress , value: wei}
+        );
+        await tx.wait();
+        console.log("Accepted terms!");
+      } catch (e: any) {
+        console.log("error", e);
+      }
+    };
     return (
       <div key={i} style={{ paddingTop: "12px", paddingBottom: "12px" }}>
         <ListCardItem
@@ -84,7 +102,8 @@ function Home(props: Props) {
             String(duration / 2592000) + " months",
           ]}
           ctaLabel="Accept"
-          onClickCta={onClickAccept}
+          value={borrower}
+          onClickCta={() => onClickAccept(borrower, index, amountInWei)}
         />
       </div>
     );
