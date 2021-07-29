@@ -32,7 +32,7 @@ function Home(props: Props) {
           await contractState.nftPawnShopContract.getWaitingTerms();
         setTerms(terms);
       } catch (e: any) {
-        console.log("e", e);
+        console.log("error getting waiting terms: ", e);
       }
     };
     if (contractState.nftPawnShopContract) {

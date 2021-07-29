@@ -115,7 +115,7 @@ function AddPawnDialog(props: Props) {
         nftTokenID,
         web3.utils.toWei(amountEther, "ether"),
         String(Number(duration) * 2592000),
-        String(Number(interestRate) * 100)
+        String(Number(interestRate)*100)
       );
       await tx.wait();
       clearFields();

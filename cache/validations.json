@@ -2,6 +2,1956 @@
   "version": "3.2",
   "log": [
     {
+      "IERC721": {
+        "src": "@openzeppelin/contracts/token/ERC721/IERC721.sol:10",
+        "inherit": [
+          "IERC165"
+        ],
+        "libraries": [],
+        "methods": [
+          "balanceOf(address)",
+          "ownerOf(uint256)",
+          "safeTransferFrom(address,address,uint256)",
+          "transferFrom(address,address,uint256)",
+          "approve(address,uint256)",
+          "getApproved(uint256)",
+          "setApprovalForAll(address,bool)",
+          "isApprovedForAll(address,address)",
+          "safeTransferFrom(address,address,uint256,bytes)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1"
+        }
+      },
+      "IERC721Receiver": {
+        "src": "@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol:10",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "onERC721Received(address,address,uint256,bytes)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1"
+        }
+      },
+      "ERC721Holder": {
+        "src": "@openzeppelin/contracts/token/ERC721/utils/ERC721Holder.sol:13",
+        "version": {
+          "withMetadata": "00424b6c71a3f5140869c97795518dddea90efc7156b573e8ec6dca8115ef457",
+          "withoutMetadata": "fd593a2425c3ddc601e910a1ec9c85223b871631d8766db914e4c74a20421acf",
+          "linkedWithoutMetadata": "fd593a2425c3ddc601e910a1ec9c85223b871631d8766db914e4c74a20421acf"
+        },
+        "inherit": [
+          "IERC721Receiver"
+        ],
+        "libraries": [],
+        "methods": [
+          "onERC721Received(address,address,uint256,bytes)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1"
+        }
+      },
+      "IERC165": {
+        "src": "@openzeppelin/contracts/utils/introspection/IERC165.sol:14",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "supportsInterface(bytes4)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1"
+        }
+      },
+      "SafeMath": {
+        "src": "@openzeppelin/contracts/utils/math/SafeMath.sol:15",
+        "version": {
+          "withMetadata": "c989fca796340899715bfb627e8a9af33a4b49695ff932afffdff7efc2fa5ec7",
+          "withoutMetadata": "08d24783a787f8a51dea0c166bb6f91a4f0865e02d03d749f102d332e6ead0ff",
+          "linkedWithoutMetadata": "08d24783a787f8a51dea0c166bb6f91a4f0865e02d03d749f102d332e6ead0ff"
+        },
+        "inherit": [],
+        "libraries": [],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1"
+        }
+      },
+      "NFTPawnShop": {
+        "src": "contracts/NFTPawnShop.sol:10",
+        "version": {
+          "withMetadata": "171076a3b4259d43aa2ee868ecf9dfec192bd750c9a438313737155d479af8d5",
+          "withoutMetadata": "94c468c382ca0360f0dcf550aa7c8bd192a5b7642c131ebc852f17aa7bf2f5b7",
+          "linkedWithoutMetadata": "94c468c382ca0360f0dcf550aa7c8bd192a5b7642c131ebc852f17aa7bf2f5b7"
+        },
+        "inherit": [
+          "ERC721Holder",
+          "IERC721Receiver"
+        ],
+        "libraries": [
+          "SafeMath"
+        ],
+        "methods": [
+          "()",
+          "pawn(address,uint256,uint256,uint256,uint256)",
+          "acceptTerms(address,uint256)",
+          "claimCollateral(uint256)",
+          "undoTerm(address,uint256)",
+          "calculatePayment(uint256,uint256,uint256)",
+          "refund(uint256)",
+          "paybackTerm(address,uint256)",
+          "getWaitingTerms()",
+          "getPawnedTerms(address)",
+          "getLoans(address)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [
+            {
+              "contract": "NFTPawnShop",
+              "label": "borrowersToTerms",
+              "type": "t_mapping(t_address,t_array(t_struct(Terms)531_storage)dyn_storage)",
+              "src": "contracts/NFTPawnShop.sol:35"
+            },
+            {
+              "contract": "NFTPawnShop",
+              "label": "lendersToTerms",
+              "type": "t_mapping(t_address,t_array(t_struct(Terms)531_storage)dyn_storage)",
+              "src": "contracts/NFTPawnShop.sol:36"
+            },
+            {
+              "contract": "NFTPawnShop",
+              "label": "allTerms",
+              "type": "t_array(t_struct(Terms)531_storage)dyn_storage",
+              "src": "contracts/NFTPawnShop.sol:37"
+            }
+          ],
+          "types": {
+            "t_mapping(t_address,t_array(t_struct(Terms)531_storage)dyn_storage)": {
+              "label": "mapping(address => struct NFTPawnShop.Terms[])"
+            },
+            "t_address": {
+              "label": "address"
+            },
+            "t_array(t_struct(Terms)531_storage)dyn_storage": {
+              "label": "struct NFTPawnShop.Terms[]"
+            },
+            "t_struct(Terms)531_storage": {
+              "label": "struct NFTPawnShop.Terms",
+              "members": [
+                {
+                  "label": "nftAddress",
+                  "type": "t_contract(IERC721)115"
+                },
+                {
+                  "label": "nftTokenID",
+                  "type": "t_uint256"
+                },
+                {
+                  "label": "amountInWei",
+                  "type": "t_uint256"
+                },
+                {
+                  "label": "interestRate",
+                  "type": "t_uint256"
+                },
+                {
+                  "label": "startTime",
+                  "type": "t_uint256"
+                },
+                {
+                  "label": "duration",
+                  "type": "t_uint256"
+                },
+                {
+                  "label": "borrower",
+                  "type": "t_address"
+                },
+                {
+                  "label": "lender",
+                  "type": "t_address"
+                },
+                {
+                  "label": "status",
+                  "type": "t_enum(CollateralStatus)504"
+                },
+                {
+                  "label": "borrowerIndex",
+                  "type": "t_uint256"
+                },
+                {
+                  "label": "lenderIndex",
+                  "type": "t_uint256"
+                },
+                {
+                  "label": "allTermsIndex",
+                  "type": "t_uint256"
+                }
+              ]
+            },
+            "t_contract(IERC721)115": {
+              "label": "contract IERC721"
+            },
+            "t_uint256": {
+              "label": "uint256"
+            },
+            "t_enum(CollateralStatus)504": {
+              "label": "enum NFTPawnShop.CollateralStatus",
+              "members": [
+                "WAITING",
+                "ACTIVE",
+                "RETURNED",
+                "DEFAULTED",
+                "CANCELLED"
+              ]
+            }
+          },
+          "layoutVersion": "1.1"
+        }
+      },
+      "console": {
+        "src": "hardhat/console.sol:4",
+        "version": {
+          "withMetadata": "4d68e04cd946064caa13b57e336f94b8024c4bd3af8e7f0bf0ef9ddf4456c9bb",
+          "withoutMetadata": "08d24783a787f8a51dea0c166bb6f91a4f0865e02d03d749f102d332e6ead0ff",
+          "linkedWithoutMetadata": "08d24783a787f8a51dea0c166bb6f91a4f0865e02d03d749f102d332e6ead0ff"
+        },
+        "inherit": [],
+        "libraries": [],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1"
+        }
+      }
+    },
+    {
+      "IERC721": {
+        "src": "@openzeppelin/contracts/token/ERC721/IERC721.sol:10",
+        "inherit": [
+          "IERC165"
+        ],
+        "libraries": [],
+        "methods": [
+          "balanceOf(address)",
+          "ownerOf(uint256)",
+          "safeTransferFrom(address,address,uint256)",
+          "transferFrom(address,address,uint256)",
+          "approve(address,uint256)",
+          "getApproved(uint256)",
+          "setApprovalForAll(address,bool)",
+          "isApprovedForAll(address,address)",
+          "safeTransferFrom(address,address,uint256,bytes)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1"
+        }
+      },
+      "IERC721Receiver": {
+        "src": "@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol:10",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "onERC721Received(address,address,uint256,bytes)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1"
+        }
+      },
+      "ERC721Holder": {
+        "src": "@openzeppelin/contracts/token/ERC721/utils/ERC721Holder.sol:13",
+        "version": {
+          "withMetadata": "00424b6c71a3f5140869c97795518dddea90efc7156b573e8ec6dca8115ef457",
+          "withoutMetadata": "fd593a2425c3ddc601e910a1ec9c85223b871631d8766db914e4c74a20421acf",
+          "linkedWithoutMetadata": "fd593a2425c3ddc601e910a1ec9c85223b871631d8766db914e4c74a20421acf"
+        },
+        "inherit": [
+          "IERC721Receiver"
+        ],
+        "libraries": [],
+        "methods": [
+          "onERC721Received(address,address,uint256,bytes)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1"
+        }
+      },
+      "IERC165": {
+        "src": "@openzeppelin/contracts/utils/introspection/IERC165.sol:14",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "supportsInterface(bytes4)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1"
+        }
+      },
+      "SafeMath": {
+        "src": "@openzeppelin/contracts/utils/math/SafeMath.sol:15",
+        "version": {
+          "withMetadata": "c989fca796340899715bfb627e8a9af33a4b49695ff932afffdff7efc2fa5ec7",
+          "withoutMetadata": "08d24783a787f8a51dea0c166bb6f91a4f0865e02d03d749f102d332e6ead0ff",
+          "linkedWithoutMetadata": "08d24783a787f8a51dea0c166bb6f91a4f0865e02d03d749f102d332e6ead0ff"
+        },
+        "inherit": [],
+        "libraries": [],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1"
+        }
+      },
+      "NFTPawnShop": {
+        "src": "contracts/NFTPawnShop.sol:10",
+        "version": {
+          "withMetadata": "0fe4049d0fe68051cef0a9a38a88d34efdb191640fb8b0f9d0413de39b8dce39",
+          "withoutMetadata": "ba3d0d338a4577a8c20f2f7b72f3632640ab052d6258f3e3d00355bb3ed68627",
+          "linkedWithoutMetadata": "ba3d0d338a4577a8c20f2f7b72f3632640ab052d6258f3e3d00355bb3ed68627"
+        },
+        "inherit": [
+          "ERC721Holder",
+          "IERC721Receiver"
+        ],
+        "libraries": [
+          "SafeMath"
+        ],
+        "methods": [
+          "()",
+          "pawn(address,uint256,uint256,uint256,uint256)",
+          "acceptTerms(address,uint256)",
+          "claimCollateral(uint256)",
+          "undoTerm(address,uint256)",
+          "calculatePayment(uint256,uint256,uint256)",
+          "refund(uint256)",
+          "paybackTerm(address,uint256)",
+          "getWaitingTerms()",
+          "getPawnedTerms(address)",
+          "getLoans(address)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [
+            {
+              "contract": "NFTPawnShop",
+              "label": "borrowersToTerms",
+              "type": "t_mapping(t_address,t_array(t_struct(Terms)531_storage)dyn_storage)",
+              "src": "contracts/NFTPawnShop.sol:35"
+            },
+            {
+              "contract": "NFTPawnShop",
+              "label": "lendersToTerms",
+              "type": "t_mapping(t_address,t_array(t_struct(Terms)531_storage)dyn_storage)",
+              "src": "contracts/NFTPawnShop.sol:36"
+            },
+            {
+              "contract": "NFTPawnShop",
+              "label": "allTerms",
+              "type": "t_array(t_struct(Terms)531_storage)dyn_storage",
+              "src": "contracts/NFTPawnShop.sol:37"
+            }
+          ],
+          "types": {
+            "t_mapping(t_address,t_array(t_struct(Terms)531_storage)dyn_storage)": {
+              "label": "mapping(address => struct NFTPawnShop.Terms[])"
+            },
+            "t_address": {
+              "label": "address"
+            },
+            "t_array(t_struct(Terms)531_storage)dyn_storage": {
+              "label": "struct NFTPawnShop.Terms[]"
+            },
+            "t_struct(Terms)531_storage": {
+              "label": "struct NFTPawnShop.Terms",
+              "members": [
+                {
+                  "label": "nftAddress",
+                  "type": "t_contract(IERC721)115"
+                },
+                {
+                  "label": "nftTokenID",
+                  "type": "t_uint256"
+                },
+                {
+                  "label": "amountInWei",
+                  "type": "t_uint256"
+                },
+                {
+                  "label": "interestRate",
+                  "type": "t_uint256"
+                },
+                {
+                  "label": "startTime",
+                  "type": "t_uint256"
+                },
+                {
+                  "label": "duration",
+                  "type": "t_uint256"
+                },
+                {
+                  "label": "borrower",
+                  "type": "t_address"
+                },
+                {
+                  "label": "lender",
+                  "type": "t_address"
+                },
+                {
+                  "label": "status",
+                  "type": "t_enum(CollateralStatus)504"
+                },
+                {
+                  "label": "borrowerIndex",
+                  "type": "t_uint256"
+                },
+                {
+                  "label": "lenderIndex",
+                  "type": "t_uint256"
+                },
+                {
+                  "label": "allTermsIndex",
+                  "type": "t_uint256"
+                }
+              ]
+            },
+            "t_contract(IERC721)115": {
+              "label": "contract IERC721"
+            },
+            "t_uint256": {
+              "label": "uint256"
+            },
+            "t_enum(CollateralStatus)504": {
+              "label": "enum NFTPawnShop.CollateralStatus",
+              "members": [
+                "WAITING",
+                "ACTIVE",
+                "RETURNED",
+                "DEFAULTED",
+                "CANCELLED"
+              ]
+            }
+          },
+          "layoutVersion": "1.1"
+        }
+      },
+      "console": {
+        "src": "hardhat/console.sol:4",
+        "version": {
+          "withMetadata": "4d68e04cd946064caa13b57e336f94b8024c4bd3af8e7f0bf0ef9ddf4456c9bb",
+          "withoutMetadata": "08d24783a787f8a51dea0c166bb6f91a4f0865e02d03d749f102d332e6ead0ff",
+          "linkedWithoutMetadata": "08d24783a787f8a51dea0c166bb6f91a4f0865e02d03d749f102d332e6ead0ff"
+        },
+        "inherit": [],
+        "libraries": [],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1"
+        }
+      }
+    },
+    {
+      "IERC721": {
+        "src": "@openzeppelin/contracts/token/ERC721/IERC721.sol:10",
+        "inherit": [
+          "IERC165"
+        ],
+        "libraries": [],
+        "methods": [
+          "balanceOf(address)",
+          "ownerOf(uint256)",
+          "safeTransferFrom(address,address,uint256)",
+          "transferFrom(address,address,uint256)",
+          "approve(address,uint256)",
+          "getApproved(uint256)",
+          "setApprovalForAll(address,bool)",
+          "isApprovedForAll(address,address)",
+          "safeTransferFrom(address,address,uint256,bytes)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1"
+        }
+      },
+      "IERC721Receiver": {
+        "src": "@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol:10",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "onERC721Received(address,address,uint256,bytes)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1"
+        }
+      },
+      "ERC721Holder": {
+        "src": "@openzeppelin/contracts/token/ERC721/utils/ERC721Holder.sol:13",
+        "version": {
+          "withMetadata": "00424b6c71a3f5140869c97795518dddea90efc7156b573e8ec6dca8115ef457",
+          "withoutMetadata": "fd593a2425c3ddc601e910a1ec9c85223b871631d8766db914e4c74a20421acf",
+          "linkedWithoutMetadata": "fd593a2425c3ddc601e910a1ec9c85223b871631d8766db914e4c74a20421acf"
+        },
+        "inherit": [
+          "IERC721Receiver"
+        ],
+        "libraries": [],
+        "methods": [
+          "onERC721Received(address,address,uint256,bytes)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1"
+        }
+      },
+      "IERC165": {
+        "src": "@openzeppelin/contracts/utils/introspection/IERC165.sol:14",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "supportsInterface(bytes4)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1"
+        }
+      },
+      "SafeMath": {
+        "src": "@openzeppelin/contracts/utils/math/SafeMath.sol:15",
+        "version": {
+          "withMetadata": "c989fca796340899715bfb627e8a9af33a4b49695ff932afffdff7efc2fa5ec7",
+          "withoutMetadata": "08d24783a787f8a51dea0c166bb6f91a4f0865e02d03d749f102d332e6ead0ff",
+          "linkedWithoutMetadata": "08d24783a787f8a51dea0c166bb6f91a4f0865e02d03d749f102d332e6ead0ff"
+        },
+        "inherit": [],
+        "libraries": [],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1"
+        }
+      },
+      "NFTPawnShop": {
+        "src": "contracts/NFTPawnShop.sol:10",
+        "version": {
+          "withMetadata": "a464bd8866fbd22b7c3f74cd012ca690ac5b4275a5cd62f50535de2d200915c3",
+          "withoutMetadata": "44827600316e17b0c814b68b46d2eb9db6d63da53c95d4a3731a3d9e547598f6",
+          "linkedWithoutMetadata": "44827600316e17b0c814b68b46d2eb9db6d63da53c95d4a3731a3d9e547598f6"
+        },
+        "inherit": [
+          "ERC721Holder",
+          "IERC721Receiver"
+        ],
+        "libraries": [
+          "SafeMath"
+        ],
+        "methods": [
+          "()",
+          "pawn(address,uint256,uint256,uint256,uint256)",
+          "acceptTerms(address,uint256)",
+          "claimCollateral(uint256)",
+          "undoTerm(address,uint256)",
+          "calculatePayment(uint256,uint256,uint256)",
+          "refund(uint256)",
+          "paybackTerm(address,uint256)",
+          "getWaitingTerms()",
+          "getPawnedTerms(address)",
+          "getLoans(address)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [
+            {
+              "contract": "NFTPawnShop",
+              "label": "borrowersToTerms",
+              "type": "t_mapping(t_address,t_array(t_struct(Terms)531_storage)dyn_storage)",
+              "src": "contracts/NFTPawnShop.sol:35"
+            },
+            {
+              "contract": "NFTPawnShop",
+              "label": "lendersToTerms",
+              "type": "t_mapping(t_address,t_array(t_struct(Terms)531_storage)dyn_storage)",
+              "src": "contracts/NFTPawnShop.sol:36"
+            },
+            {
+              "contract": "NFTPawnShop",
+              "label": "allTerms",
+              "type": "t_array(t_struct(Terms)531_storage)dyn_storage",
+              "src": "contracts/NFTPawnShop.sol:37"
+            }
+          ],
+          "types": {
+            "t_mapping(t_address,t_array(t_struct(Terms)531_storage)dyn_storage)": {
+              "label": "mapping(address => struct NFTPawnShop.Terms[])"
+            },
+            "t_address": {
+              "label": "address"
+            },
+            "t_array(t_struct(Terms)531_storage)dyn_storage": {
+              "label": "struct NFTPawnShop.Terms[]"
+            },
+            "t_struct(Terms)531_storage": {
+              "label": "struct NFTPawnShop.Terms",
+              "members": [
+                {
+                  "label": "nftAddress",
+                  "type": "t_contract(IERC721)115"
+                },
+                {
+                  "label": "nftTokenID",
+                  "type": "t_uint256"
+                },
+                {
+                  "label": "amountInWei",
+                  "type": "t_uint256"
+                },
+                {
+                  "label": "interestRate",
+                  "type": "t_uint256"
+                },
+                {
+                  "label": "startTime",
+                  "type": "t_uint256"
+                },
+                {
+                  "label": "duration",
+                  "type": "t_uint256"
+                },
+                {
+                  "label": "borrower",
+                  "type": "t_address"
+                },
+                {
+                  "label": "lender",
+                  "type": "t_address"
+                },
+                {
+                  "label": "status",
+                  "type": "t_enum(CollateralStatus)504"
+                },
+                {
+                  "label": "borrowerIndex",
+                  "type": "t_uint256"
+                },
+                {
+                  "label": "lenderIndex",
+                  "type": "t_uint256"
+                },
+                {
+                  "label": "allTermsIndex",
+                  "type": "t_uint256"
+                }
+              ]
+            },
+            "t_contract(IERC721)115": {
+              "label": "contract IERC721"
+            },
+            "t_uint256": {
+              "label": "uint256"
+            },
+            "t_enum(CollateralStatus)504": {
+              "label": "enum NFTPawnShop.CollateralStatus",
+              "members": [
+                "WAITING",
+                "ACTIVE",
+                "RETURNED",
+                "DEFAULTED",
+                "CANCELLED"
+              ]
+            }
+          },
+          "layoutVersion": "1.1"
+        }
+      },
+      "console": {
+        "src": "hardhat/console.sol:4",
+        "version": {
+          "withMetadata": "4d68e04cd946064caa13b57e336f94b8024c4bd3af8e7f0bf0ef9ddf4456c9bb",
+          "withoutMetadata": "08d24783a787f8a51dea0c166bb6f91a4f0865e02d03d749f102d332e6ead0ff",
+          "linkedWithoutMetadata": "08d24783a787f8a51dea0c166bb6f91a4f0865e02d03d749f102d332e6ead0ff"
+        },
+        "inherit": [],
+        "libraries": [],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1"
+        }
+      }
+    },
+    {
+      "IERC721": {
+        "src": "@openzeppelin/contracts/token/ERC721/IERC721.sol:10",
+        "inherit": [
+          "IERC165"
+        ],
+        "libraries": [],
+        "methods": [
+          "balanceOf(address)",
+          "ownerOf(uint256)",
+          "safeTransferFrom(address,address,uint256)",
+          "transferFrom(address,address,uint256)",
+          "approve(address,uint256)",
+          "getApproved(uint256)",
+          "setApprovalForAll(address,bool)",
+          "isApprovedForAll(address,address)",
+          "safeTransferFrom(address,address,uint256,bytes)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1"
+        }
+      },
+      "IERC721Receiver": {
+        "src": "@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol:10",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "onERC721Received(address,address,uint256,bytes)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1"
+        }
+      },
+      "ERC721Holder": {
+        "src": "@openzeppelin/contracts/token/ERC721/utils/ERC721Holder.sol:13",
+        "version": {
+          "withMetadata": "00424b6c71a3f5140869c97795518dddea90efc7156b573e8ec6dca8115ef457",
+          "withoutMetadata": "fd593a2425c3ddc601e910a1ec9c85223b871631d8766db914e4c74a20421acf",
+          "linkedWithoutMetadata": "fd593a2425c3ddc601e910a1ec9c85223b871631d8766db914e4c74a20421acf"
+        },
+        "inherit": [
+          "IERC721Receiver"
+        ],
+        "libraries": [],
+        "methods": [
+          "onERC721Received(address,address,uint256,bytes)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1"
+        }
+      },
+      "IERC165": {
+        "src": "@openzeppelin/contracts/utils/introspection/IERC165.sol:14",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "supportsInterface(bytes4)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1"
+        }
+      },
+      "SafeMath": {
+        "src": "@openzeppelin/contracts/utils/math/SafeMath.sol:15",
+        "version": {
+          "withMetadata": "c989fca796340899715bfb627e8a9af33a4b49695ff932afffdff7efc2fa5ec7",
+          "withoutMetadata": "08d24783a787f8a51dea0c166bb6f91a4f0865e02d03d749f102d332e6ead0ff",
+          "linkedWithoutMetadata": "08d24783a787f8a51dea0c166bb6f91a4f0865e02d03d749f102d332e6ead0ff"
+        },
+        "inherit": [],
+        "libraries": [],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1"
+        }
+      },
+      "NFTPawnShop": {
+        "src": "contracts/NFTPawnShop.sol:10",
+        "version": {
+          "withMetadata": "6affa062b3b446e1748d734d5e0d282dfcbcfa06f8ad1bb306b7165bfa51eaa7",
+          "withoutMetadata": "2dac0ed48023bb33b50460c914a4e3d447846b5b2c275319210f60e9f2c72830",
+          "linkedWithoutMetadata": "2dac0ed48023bb33b50460c914a4e3d447846b5b2c275319210f60e9f2c72830"
+        },
+        "inherit": [
+          "ERC721Holder",
+          "IERC721Receiver"
+        ],
+        "libraries": [
+          "SafeMath"
+        ],
+        "methods": [
+          "()",
+          "pawn(address,uint256,uint256,uint256,uint256)",
+          "acceptTerms(address,uint256)",
+          "claimCollateral(uint256)",
+          "undoTerm(address,uint256)",
+          "calculatePayment(uint256,uint256,uint256)",
+          "refund(uint256)",
+          "paybackTerm(address,uint256)",
+          "getWaitingTerms()",
+          "getPawnedTerms(address)",
+          "getLoans(address)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [
+            {
+              "contract": "NFTPawnShop",
+              "label": "borrowersToTerms",
+              "type": "t_mapping(t_address,t_array(t_struct(Terms)531_storage)dyn_storage)",
+              "src": "contracts/NFTPawnShop.sol:35"
+            },
+            {
+              "contract": "NFTPawnShop",
+              "label": "lendersToTerms",
+              "type": "t_mapping(t_address,t_array(t_struct(Terms)531_storage)dyn_storage)",
+              "src": "contracts/NFTPawnShop.sol:36"
+            },
+            {
+              "contract": "NFTPawnShop",
+              "label": "allTerms",
+              "type": "t_array(t_struct(Terms)531_storage)dyn_storage",
+              "src": "contracts/NFTPawnShop.sol:37"
+            }
+          ],
+          "types": {
+            "t_mapping(t_address,t_array(t_struct(Terms)531_storage)dyn_storage)": {
+              "label": "mapping(address => struct NFTPawnShop.Terms[])"
+            },
+            "t_address": {
+              "label": "address"
+            },
+            "t_array(t_struct(Terms)531_storage)dyn_storage": {
+              "label": "struct NFTPawnShop.Terms[]"
+            },
+            "t_struct(Terms)531_storage": {
+              "label": "struct NFTPawnShop.Terms",
+              "members": [
+                {
+                  "label": "nftAddress",
+                  "type": "t_contract(IERC721)115"
+                },
+                {
+                  "label": "nftTokenID",
+                  "type": "t_uint256"
+                },
+                {
+                  "label": "amountInWei",
+                  "type": "t_uint256"
+                },
+                {
+                  "label": "interestRate",
+                  "type": "t_uint256"
+                },
+                {
+                  "label": "startTime",
+                  "type": "t_uint256"
+                },
+                {
+                  "label": "duration",
+                  "type": "t_uint256"
+                },
+                {
+                  "label": "borrower",
+                  "type": "t_address"
+                },
+                {
+                  "label": "lender",
+                  "type": "t_address"
+                },
+                {
+                  "label": "status",
+                  "type": "t_enum(CollateralStatus)504"
+                },
+                {
+                  "label": "borrowerIndex",
+                  "type": "t_uint256"
+                },
+                {
+                  "label": "lenderIndex",
+                  "type": "t_uint256"
+                },
+                {
+                  "label": "allTermsIndex",
+                  "type": "t_uint256"
+                }
+              ]
+            },
+            "t_contract(IERC721)115": {
+              "label": "contract IERC721"
+            },
+            "t_uint256": {
+              "label": "uint256"
+            },
+            "t_enum(CollateralStatus)504": {
+              "label": "enum NFTPawnShop.CollateralStatus",
+              "members": [
+                "WAITING",
+                "ACTIVE",
+                "RETURNED",
+                "DEFAULTED",
+                "CANCELLED"
+              ]
+            }
+          },
+          "layoutVersion": "1.1"
+        }
+      },
+      "console": {
+        "src": "hardhat/console.sol:4",
+        "version": {
+          "withMetadata": "4d68e04cd946064caa13b57e336f94b8024c4bd3af8e7f0bf0ef9ddf4456c9bb",
+          "withoutMetadata": "08d24783a787f8a51dea0c166bb6f91a4f0865e02d03d749f102d332e6ead0ff",
+          "linkedWithoutMetadata": "08d24783a787f8a51dea0c166bb6f91a4f0865e02d03d749f102d332e6ead0ff"
+        },
+        "inherit": [],
+        "libraries": [],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1"
+        }
+      }
+    },
+    {
+      "IERC721": {
+        "src": "@openzeppelin/contracts/token/ERC721/IERC721.sol:10",
+        "inherit": [
+          "IERC165"
+        ],
+        "libraries": [],
+        "methods": [
+          "balanceOf(address)",
+          "ownerOf(uint256)",
+          "safeTransferFrom(address,address,uint256)",
+          "transferFrom(address,address,uint256)",
+          "approve(address,uint256)",
+          "getApproved(uint256)",
+          "setApprovalForAll(address,bool)",
+          "isApprovedForAll(address,address)",
+          "safeTransferFrom(address,address,uint256,bytes)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1"
+        }
+      },
+      "IERC721Receiver": {
+        "src": "@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol:10",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "onERC721Received(address,address,uint256,bytes)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1"
+        }
+      },
+      "ERC721Holder": {
+        "src": "@openzeppelin/contracts/token/ERC721/utils/ERC721Holder.sol:13",
+        "version": {
+          "withMetadata": "00424b6c71a3f5140869c97795518dddea90efc7156b573e8ec6dca8115ef457",
+          "withoutMetadata": "fd593a2425c3ddc601e910a1ec9c85223b871631d8766db914e4c74a20421acf",
+          "linkedWithoutMetadata": "fd593a2425c3ddc601e910a1ec9c85223b871631d8766db914e4c74a20421acf"
+        },
+        "inherit": [
+          "IERC721Receiver"
+        ],
+        "libraries": [],
+        "methods": [
+          "onERC721Received(address,address,uint256,bytes)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1"
+        }
+      },
+      "IERC165": {
+        "src": "@openzeppelin/contracts/utils/introspection/IERC165.sol:14",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "supportsInterface(bytes4)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1"
+        }
+      },
+      "SafeMath": {
+        "src": "@openzeppelin/contracts/utils/math/SafeMath.sol:15",
+        "version": {
+          "withMetadata": "c989fca796340899715bfb627e8a9af33a4b49695ff932afffdff7efc2fa5ec7",
+          "withoutMetadata": "08d24783a787f8a51dea0c166bb6f91a4f0865e02d03d749f102d332e6ead0ff",
+          "linkedWithoutMetadata": "08d24783a787f8a51dea0c166bb6f91a4f0865e02d03d749f102d332e6ead0ff"
+        },
+        "inherit": [],
+        "libraries": [],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1"
+        }
+      },
+      "NFTPawnShop": {
+        "src": "contracts/NFTPawnShop.sol:10",
+        "version": {
+          "withMetadata": "7eb95376c15734fae5191643d9ad36d3c5bc0a9b92cf7f8be97d9fe70b82e0e2",
+          "withoutMetadata": "e3c98c25586dbd54adb43be6bb36bbf936fadd8022656a133bc845d7b1aa5169",
+          "linkedWithoutMetadata": "e3c98c25586dbd54adb43be6bb36bbf936fadd8022656a133bc845d7b1aa5169"
+        },
+        "inherit": [
+          "ERC721Holder",
+          "IERC721Receiver"
+        ],
+        "libraries": [
+          "SafeMath",
+          "console"
+        ],
+        "methods": [
+          "()",
+          "pawn(address,uint256,uint256,uint256,uint256)",
+          "acceptTerms(address,uint256)",
+          "claimCollateral(uint256)",
+          "undoTerm(address,uint256)",
+          "calculatePayment(uint256,uint256,uint256)",
+          "refund(uint256)",
+          "paybackTerm(address,uint256)",
+          "getWaitingTerms()",
+          "getPawnedTerms(address)",
+          "getLoans(address)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [
+            {
+              "contract": "NFTPawnShop",
+              "label": "borrowersToTerms",
+              "type": "t_mapping(t_address,t_array(t_struct(Terms)531_storage)dyn_storage)",
+              "src": "contracts/NFTPawnShop.sol:35"
+            },
+            {
+              "contract": "NFTPawnShop",
+              "label": "lendersToTerms",
+              "type": "t_mapping(t_address,t_array(t_struct(Terms)531_storage)dyn_storage)",
+              "src": "contracts/NFTPawnShop.sol:36"
+            },
+            {
+              "contract": "NFTPawnShop",
+              "label": "allTerms",
+              "type": "t_array(t_struct(Terms)531_storage)dyn_storage",
+              "src": "contracts/NFTPawnShop.sol:37"
+            }
+          ],
+          "types": {
+            "t_mapping(t_address,t_array(t_struct(Terms)531_storage)dyn_storage)": {
+              "label": "mapping(address => struct NFTPawnShop.Terms[])"
+            },
+            "t_address": {
+              "label": "address"
+            },
+            "t_array(t_struct(Terms)531_storage)dyn_storage": {
+              "label": "struct NFTPawnShop.Terms[]"
+            },
+            "t_struct(Terms)531_storage": {
+              "label": "struct NFTPawnShop.Terms",
+              "members": [
+                {
+                  "label": "nftAddress",
+                  "type": "t_contract(IERC721)115"
+                },
+                {
+                  "label": "nftTokenID",
+                  "type": "t_uint256"
+                },
+                {
+                  "label": "amountInWei",
+                  "type": "t_uint256"
+                },
+                {
+                  "label": "interestRate",
+                  "type": "t_uint256"
+                },
+                {
+                  "label": "startTime",
+                  "type": "t_uint256"
+                },
+                {
+                  "label": "duration",
+                  "type": "t_uint256"
+                },
+                {
+                  "label": "borrower",
+                  "type": "t_address"
+                },
+                {
+                  "label": "lender",
+                  "type": "t_address"
+                },
+                {
+                  "label": "status",
+                  "type": "t_enum(CollateralStatus)504"
+                },
+                {
+                  "label": "borrowerIndex",
+                  "type": "t_uint256"
+                },
+                {
+                  "label": "lenderIndex",
+                  "type": "t_uint256"
+                },
+                {
+                  "label": "allTermsIndex",
+                  "type": "t_uint256"
+                }
+              ]
+            },
+            "t_contract(IERC721)115": {
+              "label": "contract IERC721"
+            },
+            "t_uint256": {
+              "label": "uint256"
+            },
+            "t_enum(CollateralStatus)504": {
+              "label": "enum NFTPawnShop.CollateralStatus",
+              "members": [
+                "WAITING",
+                "ACTIVE",
+                "RETURNED",
+                "DEFAULTED",
+                "CANCELLED"
+              ]
+            }
+          },
+          "layoutVersion": "1.1"
+        }
+      },
+      "console": {
+        "src": "hardhat/console.sol:4",
+        "version": {
+          "withMetadata": "4d68e04cd946064caa13b57e336f94b8024c4bd3af8e7f0bf0ef9ddf4456c9bb",
+          "withoutMetadata": "08d24783a787f8a51dea0c166bb6f91a4f0865e02d03d749f102d332e6ead0ff",
+          "linkedWithoutMetadata": "08d24783a787f8a51dea0c166bb6f91a4f0865e02d03d749f102d332e6ead0ff"
+        },
+        "inherit": [],
+        "libraries": [],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1"
+        }
+      }
+    },
+    {
+      "IERC721": {
+        "src": "@openzeppelin/contracts/token/ERC721/IERC721.sol:10",
+        "inherit": [
+          "IERC165"
+        ],
+        "libraries": [],
+        "methods": [
+          "balanceOf(address)",
+          "ownerOf(uint256)",
+          "safeTransferFrom(address,address,uint256)",
+          "transferFrom(address,address,uint256)",
+          "approve(address,uint256)",
+          "getApproved(uint256)",
+          "setApprovalForAll(address,bool)",
+          "isApprovedForAll(address,address)",
+          "safeTransferFrom(address,address,uint256,bytes)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1"
+        }
+      },
+      "IERC721Receiver": {
+        "src": "@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol:10",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "onERC721Received(address,address,uint256,bytes)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1"
+        }
+      },
+      "ERC721Holder": {
+        "src": "@openzeppelin/contracts/token/ERC721/utils/ERC721Holder.sol:13",
+        "version": {
+          "withMetadata": "00424b6c71a3f5140869c97795518dddea90efc7156b573e8ec6dca8115ef457",
+          "withoutMetadata": "fd593a2425c3ddc601e910a1ec9c85223b871631d8766db914e4c74a20421acf",
+          "linkedWithoutMetadata": "fd593a2425c3ddc601e910a1ec9c85223b871631d8766db914e4c74a20421acf"
+        },
+        "inherit": [
+          "IERC721Receiver"
+        ],
+        "libraries": [],
+        "methods": [
+          "onERC721Received(address,address,uint256,bytes)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1"
+        }
+      },
+      "IERC165": {
+        "src": "@openzeppelin/contracts/utils/introspection/IERC165.sol:14",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "supportsInterface(bytes4)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1"
+        }
+      },
+      "SafeMath": {
+        "src": "@openzeppelin/contracts/utils/math/SafeMath.sol:15",
+        "version": {
+          "withMetadata": "c989fca796340899715bfb627e8a9af33a4b49695ff932afffdff7efc2fa5ec7",
+          "withoutMetadata": "08d24783a787f8a51dea0c166bb6f91a4f0865e02d03d749f102d332e6ead0ff",
+          "linkedWithoutMetadata": "08d24783a787f8a51dea0c166bb6f91a4f0865e02d03d749f102d332e6ead0ff"
+        },
+        "inherit": [],
+        "libraries": [],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1"
+        }
+      },
+      "NFTPawnShop": {
+        "src": "contracts/NFTPawnShop.sol:10",
+        "version": {
+          "withMetadata": "8d905db3cd876efad73328ec9973dc7e041c57a2d0330c066e4d3e7653035c13",
+          "withoutMetadata": "97577d461820cdc763c471fff4acff59c6e28ef59b9273aceb703de9120effb2",
+          "linkedWithoutMetadata": "97577d461820cdc763c471fff4acff59c6e28ef59b9273aceb703de9120effb2"
+        },
+        "inherit": [
+          "ERC721Holder",
+          "IERC721Receiver"
+        ],
+        "libraries": [
+          "SafeMath",
+          "console"
+        ],
+        "methods": [
+          "()",
+          "pawn(address,uint256,uint256,uint256,uint256)",
+          "acceptTerms(address,uint256)",
+          "claimCollateral(uint256)",
+          "undoTerm(address,uint256)",
+          "calculatePayment(uint256,uint256,uint256)",
+          "refund(uint256)",
+          "paybackTerm(address,uint256)",
+          "getWaitingTerms()",
+          "getPawnedTerms(address)",
+          "getLoans(address)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [
+            {
+              "contract": "NFTPawnShop",
+              "label": "borrowersToTerms",
+              "type": "t_mapping(t_address,t_array(t_struct(Terms)531_storage)dyn_storage)",
+              "src": "contracts/NFTPawnShop.sol:35"
+            },
+            {
+              "contract": "NFTPawnShop",
+              "label": "lendersToTerms",
+              "type": "t_mapping(t_address,t_array(t_struct(Terms)531_storage)dyn_storage)",
+              "src": "contracts/NFTPawnShop.sol:36"
+            },
+            {
+              "contract": "NFTPawnShop",
+              "label": "allTerms",
+              "type": "t_array(t_struct(Terms)531_storage)dyn_storage",
+              "src": "contracts/NFTPawnShop.sol:37"
+            }
+          ],
+          "types": {
+            "t_mapping(t_address,t_array(t_struct(Terms)531_storage)dyn_storage)": {
+              "label": "mapping(address => struct NFTPawnShop.Terms[])"
+            },
+            "t_address": {
+              "label": "address"
+            },
+            "t_array(t_struct(Terms)531_storage)dyn_storage": {
+              "label": "struct NFTPawnShop.Terms[]"
+            },
+            "t_struct(Terms)531_storage": {
+              "label": "struct NFTPawnShop.Terms",
+              "members": [
+                {
+                  "label": "nftAddress",
+                  "type": "t_contract(IERC721)115"
+                },
+                {
+                  "label": "nftTokenID",
+                  "type": "t_uint256"
+                },
+                {
+                  "label": "amountInWei",
+                  "type": "t_uint256"
+                },
+                {
+                  "label": "interestRate",
+                  "type": "t_uint256"
+                },
+                {
+                  "label": "startTime",
+                  "type": "t_uint256"
+                },
+                {
+                  "label": "duration",
+                  "type": "t_uint256"
+                },
+                {
+                  "label": "borrower",
+                  "type": "t_address"
+                },
+                {
+                  "label": "lender",
+                  "type": "t_address"
+                },
+                {
+                  "label": "status",
+                  "type": "t_enum(CollateralStatus)504"
+                },
+                {
+                  "label": "borrowerIndex",
+                  "type": "t_uint256"
+                },
+                {
+                  "label": "lenderIndex",
+                  "type": "t_uint256"
+                },
+                {
+                  "label": "allTermsIndex",
+                  "type": "t_uint256"
+                }
+              ]
+            },
+            "t_contract(IERC721)115": {
+              "label": "contract IERC721"
+            },
+            "t_uint256": {
+              "label": "uint256"
+            },
+            "t_enum(CollateralStatus)504": {
+              "label": "enum NFTPawnShop.CollateralStatus",
+              "members": [
+                "WAITING",
+                "ACTIVE",
+                "RETURNED",
+                "DEFAULTED",
+                "CANCELLED"
+              ]
+            }
+          },
+          "layoutVersion": "1.1"
+        }
+      },
+      "console": {
+        "src": "hardhat/console.sol:4",
+        "version": {
+          "withMetadata": "4d68e04cd946064caa13b57e336f94b8024c4bd3af8e7f0bf0ef9ddf4456c9bb",
+          "withoutMetadata": "08d24783a787f8a51dea0c166bb6f91a4f0865e02d03d749f102d332e6ead0ff",
+          "linkedWithoutMetadata": "08d24783a787f8a51dea0c166bb6f91a4f0865e02d03d749f102d332e6ead0ff"
+        },
+        "inherit": [],
+        "libraries": [],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1"
+        }
+      }
+    },
+    {
+      "IERC721": {
+        "src": "@openzeppelin/contracts/token/ERC721/IERC721.sol:10",
+        "inherit": [
+          "IERC165"
+        ],
+        "libraries": [],
+        "methods": [
+          "balanceOf(address)",
+          "ownerOf(uint256)",
+          "safeTransferFrom(address,address,uint256)",
+          "transferFrom(address,address,uint256)",
+          "approve(address,uint256)",
+          "getApproved(uint256)",
+          "setApprovalForAll(address,bool)",
+          "isApprovedForAll(address,address)",
+          "safeTransferFrom(address,address,uint256,bytes)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1"
+        }
+      },
+      "IERC721Receiver": {
+        "src": "@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol:10",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "onERC721Received(address,address,uint256,bytes)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1"
+        }
+      },
+      "ERC721Holder": {
+        "src": "@openzeppelin/contracts/token/ERC721/utils/ERC721Holder.sol:13",
+        "version": {
+          "withMetadata": "00424b6c71a3f5140869c97795518dddea90efc7156b573e8ec6dca8115ef457",
+          "withoutMetadata": "fd593a2425c3ddc601e910a1ec9c85223b871631d8766db914e4c74a20421acf",
+          "linkedWithoutMetadata": "fd593a2425c3ddc601e910a1ec9c85223b871631d8766db914e4c74a20421acf"
+        },
+        "inherit": [
+          "IERC721Receiver"
+        ],
+        "libraries": [],
+        "methods": [
+          "onERC721Received(address,address,uint256,bytes)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1"
+        }
+      },
+      "IERC165": {
+        "src": "@openzeppelin/contracts/utils/introspection/IERC165.sol:14",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "supportsInterface(bytes4)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1"
+        }
+      },
+      "SafeMath": {
+        "src": "@openzeppelin/contracts/utils/math/SafeMath.sol:15",
+        "version": {
+          "withMetadata": "c989fca796340899715bfb627e8a9af33a4b49695ff932afffdff7efc2fa5ec7",
+          "withoutMetadata": "08d24783a787f8a51dea0c166bb6f91a4f0865e02d03d749f102d332e6ead0ff",
+          "linkedWithoutMetadata": "08d24783a787f8a51dea0c166bb6f91a4f0865e02d03d749f102d332e6ead0ff"
+        },
+        "inherit": [],
+        "libraries": [],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1"
+        }
+      },
+      "NFTPawnShop": {
+        "src": "contracts/NFTPawnShop.sol:9",
+        "version": {
+          "withMetadata": "f1cbac2577c972113bee909850e44c3f96adcb841586ea23ee2e273f3b47af42",
+          "withoutMetadata": "cab91d4dd78e2a4ec093f576ea7f3906c27d28269e632fdd25fe04408211c1ac",
+          "linkedWithoutMetadata": "cab91d4dd78e2a4ec093f576ea7f3906c27d28269e632fdd25fe04408211c1ac"
+        },
+        "inherit": [
+          "ERC721Holder",
+          "IERC721Receiver"
+        ],
+        "libraries": [
+          "SafeMath"
+        ],
+        "methods": [
+          "()",
+          "pawn(address,uint256,uint256,uint256,uint256)",
+          "acceptTerms(address,uint256)",
+          "claimCollateral(uint256)",
+          "undoTerm(address,uint256)",
+          "calculatePayment(uint256,uint256,uint256)",
+          "refund(uint256)",
+          "paybackTerm(address,uint256)",
+          "getWaitingTerms()",
+          "getPawnedTerms(address)",
+          "getLoans(address)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [
+            {
+              "contract": "NFTPawnShop",
+              "label": "borrowersToTerms",
+              "type": "t_mapping(t_address,t_array(t_struct(Terms)530_storage)dyn_storage)",
+              "src": "contracts/NFTPawnShop.sol:34"
+            },
+            {
+              "contract": "NFTPawnShop",
+              "label": "lendersToTerms",
+              "type": "t_mapping(t_address,t_array(t_struct(Terms)530_storage)dyn_storage)",
+              "src": "contracts/NFTPawnShop.sol:35"
+            },
+            {
+              "contract": "NFTPawnShop",
+              "label": "allTerms",
+              "type": "t_array(t_struct(Terms)530_storage)dyn_storage",
+              "src": "contracts/NFTPawnShop.sol:36"
+            }
+          ],
+          "types": {
+            "t_mapping(t_address,t_array(t_struct(Terms)530_storage)dyn_storage)": {
+              "label": "mapping(address => struct NFTPawnShop.Terms[])"
+            },
+            "t_address": {
+              "label": "address"
+            },
+            "t_array(t_struct(Terms)530_storage)dyn_storage": {
+              "label": "struct NFTPawnShop.Terms[]"
+            },
+            "t_struct(Terms)530_storage": {
+              "label": "struct NFTPawnShop.Terms",
+              "members": [
+                {
+                  "label": "nftAddress",
+                  "type": "t_contract(IERC721)115"
+                },
+                {
+                  "label": "nftTokenID",
+                  "type": "t_uint256"
+                },
+                {
+                  "label": "amountInWei",
+                  "type": "t_uint256"
+                },
+                {
+                  "label": "interestRate",
+                  "type": "t_uint256"
+                },
+                {
+                  "label": "startTime",
+                  "type": "t_uint256"
+                },
+                {
+                  "label": "duration",
+                  "type": "t_uint256"
+                },
+                {
+                  "label": "borrower",
+                  "type": "t_address"
+                },
+                {
+                  "label": "lender",
+                  "type": "t_address"
+                },
+                {
+                  "label": "status",
+                  "type": "t_enum(CollateralStatus)503"
+                },
+                {
+                  "label": "borrowerIndex",
+                  "type": "t_uint256"
+                },
+                {
+                  "label": "lenderIndex",
+                  "type": "t_uint256"
+                },
+                {
+                  "label": "allTermsIndex",
+                  "type": "t_uint256"
+                }
+              ]
+            },
+            "t_contract(IERC721)115": {
+              "label": "contract IERC721"
+            },
+            "t_uint256": {
+              "label": "uint256"
+            },
+            "t_enum(CollateralStatus)503": {
+              "label": "enum NFTPawnShop.CollateralStatus",
+              "members": [
+                "WAITING",
+                "ACTIVE",
+                "RETURNED",
+                "DEFAULTED",
+                "CANCELLED"
+              ]
+            }
+          },
+          "layoutVersion": "1.1"
+        }
+      }
+    },
+    {
+      "IERC721": {
+        "src": "@openzeppelin/contracts/token/ERC721/IERC721.sol:10",
+        "inherit": [
+          "IERC165"
+        ],
+        "libraries": [],
+        "methods": [
+          "balanceOf(address)",
+          "ownerOf(uint256)",
+          "safeTransferFrom(address,address,uint256)",
+          "transferFrom(address,address,uint256)",
+          "approve(address,uint256)",
+          "getApproved(uint256)",
+          "setApprovalForAll(address,bool)",
+          "isApprovedForAll(address,address)",
+          "safeTransferFrom(address,address,uint256,bytes)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1"
+        }
+      },
+      "IERC721Receiver": {
+        "src": "@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol:10",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "onERC721Received(address,address,uint256,bytes)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1"
+        }
+      },
+      "ERC721Holder": {
+        "src": "@openzeppelin/contracts/token/ERC721/utils/ERC721Holder.sol:13",
+        "version": {
+          "withMetadata": "00424b6c71a3f5140869c97795518dddea90efc7156b573e8ec6dca8115ef457",
+          "withoutMetadata": "fd593a2425c3ddc601e910a1ec9c85223b871631d8766db914e4c74a20421acf",
+          "linkedWithoutMetadata": "fd593a2425c3ddc601e910a1ec9c85223b871631d8766db914e4c74a20421acf"
+        },
+        "inherit": [
+          "IERC721Receiver"
+        ],
+        "libraries": [],
+        "methods": [
+          "onERC721Received(address,address,uint256,bytes)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1"
+        }
+      },
+      "IERC165": {
+        "src": "@openzeppelin/contracts/utils/introspection/IERC165.sol:14",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "supportsInterface(bytes4)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1"
+        }
+      },
+      "SafeMath": {
+        "src": "@openzeppelin/contracts/utils/math/SafeMath.sol:15",
+        "version": {
+          "withMetadata": "c989fca796340899715bfb627e8a9af33a4b49695ff932afffdff7efc2fa5ec7",
+          "withoutMetadata": "08d24783a787f8a51dea0c166bb6f91a4f0865e02d03d749f102d332e6ead0ff",
+          "linkedWithoutMetadata": "08d24783a787f8a51dea0c166bb6f91a4f0865e02d03d749f102d332e6ead0ff"
+        },
+        "inherit": [],
+        "libraries": [],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1"
+        }
+      },
+      "NFTPawnShop": {
+        "src": "contracts/NFTPawnShop.sol:9",
+        "version": {
+          "withMetadata": "1ab09b2c4fbf2c4852f125dd605eb54cabd79251007be6ee8a84355ea7f943d3",
+          "withoutMetadata": "4f2409f08bfbfe2e86bb2d73da72523b79a456b407ce4b478ed674af9523bf67",
+          "linkedWithoutMetadata": "4f2409f08bfbfe2e86bb2d73da72523b79a456b407ce4b478ed674af9523bf67"
+        },
+        "inherit": [
+          "ERC721Holder",
+          "IERC721Receiver"
+        ],
+        "libraries": [
+          "SafeMath"
+        ],
+        "methods": [
+          "()",
+          "pawn(address,uint256,uint256,uint256,uint256)",
+          "acceptTerms(address,uint256)",
+          "claimCollateral(uint256)",
+          "undoTerm(address,uint256)",
+          "calculatePayment(uint256,uint256,uint256)",
+          "refund(uint256)",
+          "paybackTerm(address,uint256)",
+          "getWaitingTerms()",
+          "getPawnedTerms(address)",
+          "getLoans(address)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [
+            {
+              "contract": "NFTPawnShop",
+              "label": "borrowersToTerms",
+              "type": "t_mapping(t_address,t_array(t_struct(Terms)530_storage)dyn_storage)",
+              "src": "contracts/NFTPawnShop.sol:34"
+            },
+            {
+              "contract": "NFTPawnShop",
+              "label": "lendersToTerms",
+              "type": "t_mapping(t_address,t_array(t_struct(Terms)530_storage)dyn_storage)",
+              "src": "contracts/NFTPawnShop.sol:35"
+            },
+            {
+              "contract": "NFTPawnShop",
+              "label": "allTerms",
+              "type": "t_array(t_struct(Terms)530_storage)dyn_storage",
+              "src": "contracts/NFTPawnShop.sol:36"
+            }
+          ],
+          "types": {
+            "t_mapping(t_address,t_array(t_struct(Terms)530_storage)dyn_storage)": {
+              "label": "mapping(address => struct NFTPawnShop.Terms[])"
+            },
+            "t_address": {
+              "label": "address"
+            },
+            "t_array(t_struct(Terms)530_storage)dyn_storage": {
+              "label": "struct NFTPawnShop.Terms[]"
+            },
+            "t_struct(Terms)530_storage": {
+              "label": "struct NFTPawnShop.Terms",
+              "members": [
+                {
+                  "label": "nftAddress",
+                  "type": "t_contract(IERC721)115"
+                },
+                {
+                  "label": "nftTokenID",
+                  "type": "t_uint256"
+                },
+                {
+                  "label": "amountInWei",
+                  "type": "t_uint256"
+                },
+                {
+                  "label": "interestRate",
+                  "type": "t_uint256"
+                },
+                {
+                  "label": "startTime",
+                  "type": "t_uint256"
+                },
+                {
+                  "label": "duration",
+                  "type": "t_uint256"
+                },
+                {
+                  "label": "borrower",
+                  "type": "t_address"
+                },
+                {
+                  "label": "lender",
+                  "type": "t_address"
+                },
+                {
+                  "label": "status",
+                  "type": "t_enum(CollateralStatus)503"
+                },
+                {
+                  "label": "borrowerIndex",
+                  "type": "t_uint256"
+                },
+                {
+                  "label": "lenderIndex",
+                  "type": "t_uint256"
+                },
+                {
+                  "label": "allTermsIndex",
+                  "type": "t_uint256"
+                }
+              ]
+            },
+            "t_contract(IERC721)115": {
+              "label": "contract IERC721"
+            },
+            "t_uint256": {
+              "label": "uint256"
+            },
+            "t_enum(CollateralStatus)503": {
+              "label": "enum NFTPawnShop.CollateralStatus",
+              "members": [
+                "WAITING",
+                "ACTIVE",
+                "RETURNED",
+                "DEFAULTED",
+                "CANCELLED"
+              ]
+            }
+          },
+          "layoutVersion": "1.1"
+        }
+      }
+    },
+    {
       "ERC721": {
         "src": "@openzeppelin/contracts/token/ERC721/ERC721.sol:18",
         "version": {

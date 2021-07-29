@@ -5,6 +5,7 @@ import "@openzeppelin/contracts/token/ERC721/utils/ERC721Holder.sol";
 import "@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol";
 import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 import "@openzeppelin/contracts/utils/math/SafeMath.sol";
+import "hardhat/console.sol";
 
 contract NFTPawnShop is IERC721Receiver, ERC721Holder {
     using SafeMath for uint256;
@@ -91,6 +92,7 @@ contract NFTPawnShop is IERC721Receiver, ERC721Holder {
         );
         terms.status = CollateralStatus.DEFAULTED;
         allTerms[terms.allTermsIndex] = terms;
+        borrowersToTerms[terms.borrower][terms.borrowerIndex] = terms;
         lendersToTerms[terms.lender][terms.lenderIndex] = terms;
     }
 
@@ -108,19 +110,13 @@ contract NFTPawnShop is IERC721Receiver, ERC721Holder {
         // delete borrowersToTerms[_borrower];
     }
 
-    /// @dev calculate amount of payment required - interest rate in bps
+    /// @dev calculate amount of payment required - interest rate is % so divide by 10^4
     function calculatePayment(
         uint256 _amountInWei,
         uint256 _interestRate,
         uint256 _startTime
     ) public view returns (uint256 amount) {
-        uint256 currentDuration = block.timestamp.sub(_startTime).div(
-            1 minutes
-        );
-        uint256 numPayments = currentDuration.div(1); // per min
-        uint256 interest = _amountInWei.mul(_interestRate).div(10**4).mul(
-            numPayments
-        );
+        uint256 interest = _amountInWei.mul(_interestRate).div(10**4);
         return _amountInWei.add(interest);
     }
 
@@ -145,19 +141,20 @@ contract NFTPawnShop is IERC721Receiver, ERC721Holder {
         payable(terms.lender).transfer(msg.value);
         terms.status = CollateralStatus.RETURNED;
         allTerms[terms.allTermsIndex] = terms;
+        borrowersToTerms[terms.borrower][terms.borrowerIndex] = terms;
         lendersToTerms[terms.lender][terms.lenderIndex] = terms;
     }
 
-    function getWaitingTerms() external view returns (Terms[] memory, uint) {
-        uint j = 0;
-        for (uint i = 0; i < allTerms.length; i++) {
+    function getWaitingTerms() external view returns (Terms[] memory, uint256) {
+        uint256 j = 0;
+        for (uint256 i = 0; i < allTerms.length; i++) {
             if (allTerms[i].status == CollateralStatus.WAITING) {
                 j++;
             }
         }
         Terms[] memory termsTemp = new Terms[](j);
-        uint k = 0;
-        for (uint i = 0; i < allTerms.length; i++) {
+        uint256 k = 0;
+        for (uint256 i = 0; i < allTerms.length; i++) {
             if (allTerms[i].status == CollateralStatus.WAITING) {
                 termsTemp[k] = allTerms[i];
                 k++;
@@ -166,12 +163,15 @@ contract NFTPawnShop is IERC721Receiver, ERC721Holder {
         return (termsTemp, j);
     }
 
-    function getPawnedTerms(address borrower) external view returns (Terms[] memory) {
+    function getPawnedTerms(address borrower)
+        external
+        view
+        returns (Terms[] memory)
+    {
         return borrowersToTerms[borrower];
     }
 
     function getLoans(address lender) external view returns (Terms[] memory) {
         return lendersToTerms[lender];
     }
-
 }

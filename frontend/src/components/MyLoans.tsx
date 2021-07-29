@@ -40,7 +40,7 @@ function MyLoans(props: Props) {
         );
         setLoans(currLoans);
       } catch (e: any) {
-        console.log("e", e);
+        console.log("error in setting loans: ", e);
       }
     };
     if (contractState.nftPawnShopContract) {
@@ -54,22 +54,24 @@ function MyLoans(props: Props) {
       nftTokenID,
       amountInWei,
       interestRate,
-      _startTime,
+      startTime,
       duration,
       borrower,
       _lender,
       status,
       index,
     ] = term;
+    const endTime = new Date(Number(startTime)*1000 + Number(duration)*1000);
     const onClickClaim = async (
       status: number,
       index: any,
       borrower: string
     ) => {
       const indexNum = index.toNumber();
+      const currEndTime = new Date(Number(startTime)*1000 + Number(duration)*1000);
       switch (statusText(status)) {
         case "Returned": {
-          buttonLabel = "claim";
+          buttonLabel = "Claim";
           try {
             const tx =
               await props.contractState.nftPawnShopContract.paybackTerm(
@@ -84,23 +86,23 @@ function MyLoans(props: Props) {
           }
           break;
         }
-        case "Defaulted": {
-          buttonLabel = "claim collateral";
-          try {
-            const tx =
-              await props.contractState.nftPawnShopContract.claimCollateral(
-                indexNum,
-                { from: props.accountState.selectedAddress }
-              );
-            await tx.wait();
-            console.log("Claimed collateral for default!");
-          } catch (e: any) {
-            console.log("error", e);
-          }
-          break;
-        }
         case "Active": {
-          buttonLabel = null;
+          if(currEndTime < new Date()) {
+            buttonLabel = "Claim";
+            try {
+              const tx = await props.contractState.nftPawnShopContract.claimCollateral(
+                indexNum,
+                {from: props.accountState.selectedAddress}
+              );
+              await tx.wait();
+              console.log("Claimed collateral for default!");
+            } catch (e: any) {
+              console.log("error", e);
+            }
+          }
+          else {
+            buttonLabel = null;
+          }
           break;
         }
         default: {
@@ -108,18 +110,19 @@ function MyLoans(props: Props) {
         }
       }
     };
-    var buttonLabel;
+    let buttonLabel;
     switch (statusText(status)) {
       case "Returned": {
-        buttonLabel = "claim";
-        break;
-      }
-      case "Defaulted": {
-        buttonLabel = "claim collateral";
+        buttonLabel = "Claim";
         break;
       }
       case "Active": {
-        buttonLabel = "";
+        if(endTime < new Date()) {
+          buttonLabel = "Claim";
+        }
+        else {
+          buttonLabel = "";
+        }
         break;
       }
       default: {
@@ -165,11 +168,6 @@ function MyLoans(props: Props) {
 
   return (
     <div>
-      <AddPawnDialog show={showDialog} onClose={onClose} />
-      <div style={{ paddingLeft: "16px", paddingTop: "24px" }}>
-        <ActionButton label="+ Pawn NFT" onClick={onClickPawn} />
-      </div>
-
       <div style={{ paddingLeft: "16px", paddingTop: "36px" }}>
         <div className="home-pawn-list-title">Your Loans</div>
         {connectedMessage}

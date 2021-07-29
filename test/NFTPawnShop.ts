@@ -154,27 +154,17 @@ describe("Pawning", () => {
     );
   });
 
-  it("basic payment calculations with interest rate ", async () => {
+  it("basic payment calculations with interest rate 1% ", async () => {
     await basicPawn();
     const currTimeStamp = (Date.now() / 1000) | 0;
-    const earlierOneMinTimeStamp = currTimeStamp - 60; // 60 seconds prior (1 cycle) -> interest = 100000*(10/10000)*1 = 100
-    const earlierTwoMinTimeStamp = currTimeStamp - 120; // 2 mins prior (2 cycles) -> interest = 100000*(10/10000)*2 = 200
-
     const paymentAmountOneMin = await pawnShop.calculatePayment(
-      100000,
+      100000000,
       10,
-      earlierOneMinTimeStamp
+      currTimeStamp
     );
     const paymentAmountOneMinInt = await paymentAmountOneMin.toBigInt();
-    expect(paymentAmountOneMin.gte(100000 + 100)).to.equal(true);
-
-    const paymentAmountTwoMin = await pawnShop.calculatePayment(
-      100000,
-      10,
-      earlierTwoMinTimeStamp
-    );
-    const paymentAmountTwoMinInt = await paymentAmountTwoMin.toBigInt();
-    expect(paymentAmountTwoMin.gte(100000 + 200)).to.equal(true);
+    console.log("This is paymentAmountOneMinInt: ", paymentAmountOneMinInt);
+    expect(paymentAmountOneMin.eq(110000000)).to.equal(true);
   });
 
   it("should do basic payment calc", async () => {

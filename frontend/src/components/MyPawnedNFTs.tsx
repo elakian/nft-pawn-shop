@@ -29,7 +29,7 @@ function MyPawnedNFTs(props: Props) {
         );
         setPawnedTerms(terms);
       } catch (e: any) {
-        console.log("e", e);
+        console.log("error getting pawned terms: ", e);
       }
     };
     if (contractState && contractState.nftPawnShopContract) {
