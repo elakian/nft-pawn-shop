@@ -13,7 +13,6 @@ interface Props {
 }
 
 function ListCardItem(props: Props) {
-  console.log("in ListCardItem.. this is value: ", props.value);
   const headers = props.headers.map((ele, i) => (
     <th key={i} align="left">
       {ele}

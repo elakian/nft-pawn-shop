@@ -42,7 +42,7 @@ function MyPawnedNFTs(props: Props) {
       nftTokenID,
       amountInWei,
       interestRate,
-      startTime,
+      _startTime,
       duration,
       borrower,
       lender,
@@ -90,8 +90,7 @@ function MyPawnedNFTs(props: Props) {
         const amountPlusInterest =
           await contractState.nftPawnShopContract.calculatePayment(
             amountInWei,
-            interestRate,
-            startTime
+            interestRate
           );
         const tx = await contractState.nftPawnShopContract.paybackTerm(
           borrower,

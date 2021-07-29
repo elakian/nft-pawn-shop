@@ -60,37 +60,16 @@ function MyLoans(props: Props) {
       borrower: string
     ) => {
       const indexNum = index.toNumber();
-      const currEndTime = new Date(
-        Number(startTime) * 1000 + Number(duration) * 1000
-      );
       switch (statusText(status)) {
-        case "Returned": {
-          buttonLabel = "Claim";
-          try {
-            const tx =
-              await props.contractState.nftPawnShopContract.paybackTerm(
-                borrower,
-                indexNum,
-                { from: props.accountState.selectedAddress }
-              );
-            await tx.wait();
-            console.log("Claimed returned payment!");
-          } catch (e: any) {
-            console.log("error", e);
-          }
-          break;
-        }
         case "Active": {
-          if (currEndTime < new Date()) {
+          if (endTime <= new Date()) {
             buttonLabel = "Claim";
             try {
               const tx =
                 await props.contractState.nftPawnShopContract.claimCollateral(
-                  indexNum,
-                  { from: props.accountState.selectedAddress }
+                  indexNum
                 );
               await tx.wait();
-              console.log("Claimed collateral for default!");
             } catch (e: any) {
               console.log("error", e);
             }
@@ -99,30 +78,22 @@ function MyLoans(props: Props) {
           }
           break;
         }
-        default: {
-          buttonLabel = null;
-        }
       }
       history.go(0);
     };
-    let buttonLabel;
+    let buttonLabel = undefined;
     switch (statusText(status)) {
-      case "Returned": {
-        buttonLabel = "Claim";
-        break;
-      }
       case "Active": {
-        if (endTime < new Date()) {
+        if (endTime <= new Date()) {
           buttonLabel = "Claim";
-        } else {
-          buttonLabel = "";
         }
         break;
       }
-      default: {
-        buttonLabel = "";
-      }
     }
+    console.log("buttonLabel", buttonLabel);
+    console.log("endTime", endTime);
+    console.log("endTime", endTime <= new Date());
+
     return (
       <div key={i} style={{ paddingTop: "12px", paddingBottom: "12px" }}>
         <ListCardItem

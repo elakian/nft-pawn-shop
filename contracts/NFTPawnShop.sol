@@ -113,9 +113,8 @@ contract NFTPawnShop is IERC721Receiver, ERC721Holder {
     /// @dev calculate amount of payment required - interest rate is % so divide by 10^4
     function calculatePayment(
         uint256 _amountInWei,
-        uint256 _interestRate,
-        uint256 _startTime
-    ) public view returns (uint256 amount) {
+        uint256 _interestRate
+    ) public pure returns (uint256 amount) {
         uint256 interest = _amountInWei.mul(_interestRate).div(10**4);
         return _amountInWei.add(interest);
     }
@@ -130,8 +129,7 @@ contract NFTPawnShop is IERC721Receiver, ERC721Holder {
         Terms memory terms = borrowersToTerms[_borrower][termIndex];
         uint256 payment = calculatePayment(
             terms.amountInWei,
-            terms.interestRate,
-            terms.startTime
+            terms.interestRate
         );
         require(payment <= msg.value, "need to send min payback amount");
         uint256 delta = msg.value - payment;
