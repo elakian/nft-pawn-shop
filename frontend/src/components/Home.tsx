@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { getAccountState, getContractState } from "../redux/selectors";
 import { AccountState } from "../redux/reducers/AccountReducer";
 import { ContractState } from "../redux/reducers/ContractReducer";
+import { formatAddress } from "./utils/utils";
 
 import ActionButton from "./ActionButton";
 import AddPawnDialog from "./AddPawnDialog";
@@ -42,13 +43,6 @@ function Home(props: Props) {
     setShowDialog(false);
   };
   console.log("terms: ", terms);
-  const formatAddress = (address: string) => {
-    return (
-      address.substring(0, 6) +
-      "..." +
-      address.substring(address.length - 4, address.length)
-    );
-  };
 
   const termComponents = terms.map((term, i) => {
     const [

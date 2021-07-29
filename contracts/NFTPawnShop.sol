@@ -12,7 +12,8 @@ contract NFTPawnShop is IERC721Receiver, ERC721Holder {
         WAITING,
         ACTIVE,
         RETURNED,
-        DEFAULTED
+        DEFAULTED,
+        CANCELLED
     }
 
     struct Terms {
@@ -25,7 +26,9 @@ contract NFTPawnShop is IERC721Receiver, ERC721Holder {
         address borrower;
         address lender;
         CollateralStatus status;
-        uint256 index;
+        uint256 borrowerIndex;
+        uint256 lenderIndex;
+        uint256 allTermsIndex;
     }
 
     mapping(address => Terms[]) borrowersToTerms;
@@ -51,7 +54,9 @@ contract NFTPawnShop is IERC721Receiver, ERC721Holder {
             msg.sender,
             address(0x0),
             CollateralStatus.WAITING,
-            borrowersToTerms[msg.sender].length
+            borrowersToTerms[msg.sender].length,
+            0,
+            allTerms.length
         );
 
         _nftAddress.safeTransferFrom(msg.sender, address(this), _nftTokenID);
@@ -68,6 +73,7 @@ contract NFTPawnShop is IERC721Receiver, ERC721Holder {
         terms.status = CollateralStatus.ACTIVE;
         terms.startTime = block.timestamp;
         lendersToTerms[msg.sender].push(terms);
+        allTerms[terms.allTermsIndex] = terms;
     }
 
     function claimCollateral(uint256 termIndex) external {
@@ -84,6 +90,8 @@ contract NFTPawnShop is IERC721Receiver, ERC721Holder {
             terms.nftTokenID
         );
         terms.status = CollateralStatus.DEFAULTED;
+        allTerms[terms.allTermsIndex] = terms;
+        lendersToTerms[terms.lender][terms.lenderIndex] = terms;
     }
 
     /// @dev undo term that has not been accepted yet
@@ -95,7 +103,9 @@ contract NFTPawnShop is IERC721Receiver, ERC721Holder {
         IERC721 nftAddress = terms.nftAddress;
         uint256 nftTokenID = terms.nftTokenID;
         nftAddress.safeTransferFrom(address(this), _borrower, nftTokenID);
-        delete borrowersToTerms[_borrower];
+        terms.status = CollateralStatus.CANCELLED;
+        allTerms[terms.allTermsIndex] = terms;
+        // delete borrowersToTerms[_borrower];
     }
 
     /// @dev calculate amount of payment required - interest rate in bps
@@ -134,17 +144,34 @@ contract NFTPawnShop is IERC721Receiver, ERC721Holder {
         }
         payable(terms.lender).transfer(msg.value);
         terms.status = CollateralStatus.RETURNED;
+        allTerms[terms.allTermsIndex] = terms;
+        lendersToTerms[terms.lender][terms.lenderIndex] = terms;
     }
 
     function getWaitingTerms() external view returns (Terms[] memory, uint) {
-        Terms[] memory termsTemp = new Terms[](allTerms.length);
         uint j = 0;
         for (uint i = 0; i < allTerms.length; i++) {
             if (allTerms[i].status == CollateralStatus.WAITING) {
-                termsTemp[j] = allTerms[i];
                 j++;
+            }
+        }
+        Terms[] memory termsTemp = new Terms[](j);
+        uint k = 0;
+        for (uint i = 0; i < allTerms.length; i++) {
+            if (allTerms[i].status == CollateralStatus.WAITING) {
+                termsTemp[k] = allTerms[i];
+                k++;
             }
         }
         return (termsTemp, j);
     }
+
+    function getPawnedTerms(address borrower) external view returns (Terms[] memory) {
+        return borrowersToTerms[borrower];
+    }
+
+    function getLoans(address lender) external view returns (Terms[] memory) {
+        return lendersToTerms[lender];
+    }
+
 }

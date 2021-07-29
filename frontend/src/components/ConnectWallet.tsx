@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { ethers } from "ethers";
 import { connect } from "react-redux";
 import { setAccountDetails, setContractDetails } from "../redux/actions";
@@ -40,6 +40,9 @@ function ConnectWallet(props: Props) {
     props.setAccountDetails({ selectedAddress, selectedNetwork });
     props.setContractDetails({ nftPawnShopContract, pawnNftContract });
   };
+  useEffect(() => {
+    connectWallet();
+  }, []);
 
   return (
     <div>
