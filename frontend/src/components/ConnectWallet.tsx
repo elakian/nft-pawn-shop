@@ -40,8 +40,15 @@ function ConnectWallet(props: Props) {
     props.setAccountDetails({ selectedAddress, selectedNetwork });
     props.setContractDetails({ nftPawnShopContract, pawnNftContract });
   };
+
   useEffect(() => {
     connectWallet();
+    (window as any).ethereum.on("accountsChanged", async ([]) => {
+      await connectWallet();
+    });
+    (window as any).ethereum.on("networkChanged", async ([]) => {
+      await connectWallet();
+    });
   }, []);
 
   return (
