@@ -90,9 +90,6 @@ function MyLoans(props: Props) {
         break;
       }
     }
-    console.log("buttonLabel", buttonLabel);
-    console.log("endTime", endTime);
-    console.log("endTime", endTime <= new Date());
 
     return (
       <div key={i} style={{ paddingTop: "12px", paddingBottom: "12px" }}>
