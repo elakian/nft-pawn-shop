@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import web3 from "web3";
-import AddPawnDialog from "./AddPawnDialog";
 import ListCardItem from "./ListCardItem";
 
 import { AccountState } from "../redux/reducers/AccountReducer";
@@ -8,7 +7,6 @@ import { ContractState } from "../redux/reducers/ContractReducer";
 import { connect } from "react-redux";
 import { getAccountState, getContractState } from "../redux/selectors";
 import { formatAddress, statusText } from "./utils/utils";
-import ActionButton from "./ActionButton";
 
 import { useHistory } from "react-router-dom";
 
@@ -20,7 +18,6 @@ interface Props {
 }
 
 function MyLoans(props: Props) {
-  const [showDialog, setShowDialog] = useState(false);
   const [loans, setLoans] = useState([]);
   const history = useHistory();
 
@@ -54,14 +51,18 @@ function MyLoans(props: Props) {
       status,
       index,
     ] = term;
-    const endTime = new Date(Number(startTime)*1000 + Number(duration)*1000);
+    const endTime = new Date(
+      Number(startTime) * 1000 + Number(duration) * 1000
+    );
     const onClickClaim = async (
       status: number,
       index: any,
       borrower: string
     ) => {
       const indexNum = index.toNumber();
-      const currEndTime = new Date(Number(startTime)*1000 + Number(duration)*1000);
+      const currEndTime = new Date(
+        Number(startTime) * 1000 + Number(duration) * 1000
+      );
       switch (statusText(status)) {
         case "Returned": {
           buttonLabel = "Claim";
@@ -80,20 +81,20 @@ function MyLoans(props: Props) {
           break;
         }
         case "Active": {
-          if(currEndTime < new Date()) {
+          if (currEndTime < new Date()) {
             buttonLabel = "Claim";
             try {
-              const tx = await props.contractState.nftPawnShopContract.claimCollateral(
-                indexNum,
-                {from: props.accountState.selectedAddress}
-              );
+              const tx =
+                await props.contractState.nftPawnShopContract.claimCollateral(
+                  indexNum,
+                  { from: props.accountState.selectedAddress }
+                );
               await tx.wait();
               console.log("Claimed collateral for default!");
             } catch (e: any) {
               console.log("error", e);
             }
-          }
-          else {
+          } else {
             buttonLabel = null;
           }
           break;
@@ -111,10 +112,9 @@ function MyLoans(props: Props) {
         break;
       }
       case "Active": {
-        if(endTime < new Date()) {
+        if (endTime < new Date()) {
           buttonLabel = "Claim";
-        }
-        else {
+        } else {
           buttonLabel = "";
         }
         break;
