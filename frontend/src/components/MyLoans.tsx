@@ -7,7 +7,9 @@ import { AccountState } from "../redux/reducers/AccountReducer";
 import { ContractState } from "../redux/reducers/ContractReducer";
 import { connect } from "react-redux";
 import { getAccountState, getContractState } from "../redux/selectors";
+import { formatAddress, statusText} from "./utils/utils";
 import ActionButton from "./ActionButton";
+
 
 import "./styles/home.scss";
 
@@ -45,14 +47,6 @@ function MyLoans(props: Props) {
     }
   }, [contractState]);
 
-  const formatAddress = (address: string) => {
-    return (
-      address.substring(0, 6) +
-      "..." +
-      address.substring(address.length - 4, address.length)
-    );
-  };
-
   const loanComponents = loans.map((term, i) => {
     const [
       nftAddress,
@@ -63,10 +57,68 @@ function MyLoans(props: Props) {
       duration,
       borrower,
       _lender,
-      _status,
+      status,
       index,
     ] = term;
-    const onClickAccept = () => {};
+    const onClickClaim = async (status : number, index: any, borrower: string) => {
+      const indexNum = index.toNumber();
+      switch (statusText(status)) {
+        case "Returned": {
+          buttonLabel = "claim";
+          try {
+            const tx = await props.contractState.nftPawnShopContract.paybackTerm(
+              borrower,
+              indexNum,
+              {from: props.accountState.selectedAddress}
+            );
+            await tx.wait();
+            console.log("Claimed returned payment!");
+          } catch (e: any) {
+            console.log("error", e);
+          }
+          break;
+        }
+        case "Defaulted": {
+          buttonLabel = "claim collateral";
+          try {
+            const tx = await props.contractState.nftPawnShopContract.claimCollateral(
+              indexNum,
+              {from: props.accountState.selectedAddress}
+            );
+            await tx.wait();
+            console.log("Claimed collateral for default!");
+          } catch (e: any) {
+            console.log("error", e);
+          }
+          break;
+        }
+        case "Active": {
+          buttonLabel = null;
+          break;
+        }
+        default: {
+          buttonLabel = null;
+        } 
+      };
+    };
+    var buttonLabel;
+    switch (statusText(status)) {
+      case "Returned": {
+        buttonLabel = "claim";
+        break;
+      }
+      case "Defaulted": {
+        buttonLabel = "claim collateral";
+        break;
+      }
+      case "Active": {
+        buttonLabel = "";
+        break;
+      }
+      default: {
+        buttonLabel = "";
+      } 
+    };
     return (
       <div key={i} style={{ paddingTop: "12px", paddingBottom: "12px" }}>
         <ListCardItem
@@ -77,6 +129,7 @@ function MyLoans(props: Props) {
             "Loan Amount (ether)",
             "Interest Rate",
             "Duration",
+            "Status",
           ]}
           content={[
             formatAddress(borrower),
@@ -85,9 +138,10 @@ function MyLoans(props: Props) {
             web3.utils.fromWei(String(amountInWei), "ether"),
             String(interestRate / 100) + "%",
             String(duration / 2592000) + " months",
+            statusText(status),
           ]}
-          ctaLabel="Accept"
-          onClickCta={onClickAccept}
+          ctaLabel={buttonLabel}
+          onClickCta={() => onClickClaim(status, index, borrower)}
         />
       </div>
     );
