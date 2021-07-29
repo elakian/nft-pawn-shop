@@ -80,9 +80,20 @@ function MyPawnedNFTs(props: Props) {
       headers.push("Lender");
       content.push(formatAddress(lender));
     }
+    if (statusFormatted === "Active") {
+      ctaLabel = "Pay";
+      onClickCta = async () => {
+        const tx = await contractState.nftPawnShopContract.paybackTerm(
+          borrower,
+          index,
+          { value: amountInWei }
+        );
+        await tx.wait();
+      };
+    }
 
     return (
-      <div key={i}>
+      <div key={i} style={{ paddingBottom: "12px" }}>
         <ListCardItem
           headers={headers}
           content={content}
