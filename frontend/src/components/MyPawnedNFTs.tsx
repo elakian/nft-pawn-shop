@@ -9,6 +9,8 @@ import { formatAddress, statusText } from "./utils/utils";
 
 import ListCardItem from "./ListCardItem";
 
+import { useHistory } from "react-router-dom";
+
 interface Props {
   accountState: AccountState;
   contractState: ContractState;
@@ -17,6 +19,8 @@ interface Props {
 function MyPawnedNFTs(props: Props) {
   const [pawnedTerms, setPawnedTerms] = useState([]);
   const { contractState } = props;
+  const history = useHistory();
+
   useEffect(() => {
     const func = async () => {
       try {
@@ -32,7 +36,6 @@ function MyPawnedNFTs(props: Props) {
       func();
     }
   }, [contractState]);
-  console.log("pawned terms", pawnedTerms);
   const pawnedTermsComps = pawnedTerms.map((term, i) => {
     const [
       nftAddress,
@@ -75,6 +78,7 @@ function MyPawnedNFTs(props: Props) {
           index
         );
         await tx.wait();
+        history.go(0);
       };
     } else if (statusFormatted !== "Cancelled") {
       headers.push("Lender");
@@ -89,13 +93,13 @@ function MyPawnedNFTs(props: Props) {
             interestRate,
             startTime
           );
-        console.log("amountPlusInterest", amountPlusInterest);
         const tx = await contractState.nftPawnShopContract.paybackTerm(
           borrower,
           index,
           { value: String(amountPlusInterest) }
         );
         await tx.wait();
+        history.go(0);
       };
     }
 

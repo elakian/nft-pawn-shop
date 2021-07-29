@@ -10,6 +10,8 @@ import ActionButton from "./ActionButton";
 import AddPawnDialog from "./AddPawnDialog";
 import ListCardItem from "./ListCardItem";
 
+import { useHistory } from "react-router-dom";
+
 import "./styles/home.scss";
 
 interface Props {
@@ -20,6 +22,7 @@ interface Props {
 function Home(props: Props) {
   const [showDialog, setShowDialog] = useState(false);
   const [terms, setTerms] = useState([]);
+  const history = useHistory();
 
   const { contractState } = props;
   useEffect(() => {
@@ -42,7 +45,6 @@ function Home(props: Props) {
   const onClose = () => {
     setShowDialog(false);
   };
-  console.log("terms: ", terms);
 
   const termComponents = terms.map((term, i) => {
     const [
@@ -57,21 +59,21 @@ function Home(props: Props) {
       _status,
       index,
     ] = term;
-    const onClickAccept = async (borrower: string, index: any, amountInWei: string) => {
-      console.log("clicked accept..");
-      console.log("this is borrower: ", borrower);
-      console.log("this is index: ", index.toNumber());
-      console.log("this is amountInWei: ", BigInt(amountInWei.toString()));
+    const onClickAccept = async (
+      borrower: string,
+      index: any,
+      amountInWei: string
+    ) => {
       const indexNum = index.toNumber();
       const wei = BigInt(amountInWei.toString());
       try {
         const tx = await props.contractState.nftPawnShopContract.acceptTerms(
           borrower,
           indexNum,
-          {from: props.accountState.selectedAddress , value: wei}
+          { from: props.accountState.selectedAddress, value: wei }
         );
         await tx.wait();
-        console.log("Accepted terms!");
+        history.push("/loans");
       } catch (e: any) {
         console.log("error", e);
       }

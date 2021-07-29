@@ -14,6 +14,8 @@ import { Modal } from "react-bootstrap";
 import NFTPawnShopJSON from "../NFTPawnShop.json";
 import PawnNFTJSON from "../PawnNFT.json";
 
+import { useHistory } from "react-router-dom";
+
 import "./styles/addPawnDialog.scss";
 
 interface Props {
@@ -31,6 +33,7 @@ function AddPawnDialog(props: Props) {
   const [interestRate, setInterestRate] = useState("");
   const [duration, setDuration] = useState("");
   const [dialogState, setDialogState] = useState("approve");
+  const history = useHistory();
 
   const onChangeNftAddress = (e: any) => {
     setNftAddress(e.target.value);
@@ -81,7 +84,6 @@ function AddPawnDialog(props: Props) {
       );
       const tx = await nftContract.approve(NFTPawnShopJSON.address, nftTokenID);
       await tx.wait();
-      console.log("Approved!");
       setDialogState("terms");
     };
     button = <ActionButton isAlt label="Approve" onClick={onClickApprove} />;
@@ -116,9 +118,9 @@ function AddPawnDialog(props: Props) {
         String(Number(interestRate) * 100)
       );
       await tx.wait();
-      console.log("Created Term!");
       clearFields();
       onClose();
+      history.push("/pawned");
     };
     button = <ActionButton isAlt label="Pawn" onClick={onClickPawn} />;
     body = (

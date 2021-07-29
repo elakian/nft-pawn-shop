@@ -7,19 +7,23 @@ import { AccountState } from "../redux/reducers/AccountReducer";
 import { ContractState } from "../redux/reducers/ContractReducer";
 import { connect } from "react-redux";
 import { getAccountState, getContractState } from "../redux/selectors";
-import { formatAddress, statusText} from "./utils/utils";
+import { formatAddress, statusText } from "./utils/utils";
 import ActionButton from "./ActionButton";
 
+import { useHistory } from "react-router-dom";
 
 import "./styles/home.scss";
 
 interface Props {
-    accountState: AccountState;
-    contractState: ContractState;
+  accountState: AccountState;
+  contractState: ContractState;
 }
 
 function MyLoans(props: Props) {
   const [showDialog, setShowDialog] = useState(false);
+  const [loans, setLoans] = useState([]);
+  const history = useHistory();
+
   const onClickPawn = () => {
     setShowDialog(!showDialog);
   };
@@ -27,17 +31,14 @@ function MyLoans(props: Props) {
     setShowDialog(false);
   };
 
-  const [loans, setLoans] = useState([]);
-
   const { contractState } = props;
   useEffect(() => {
     const func = async () => {
       try {
-        console.log("trying to get curr loans, this is props.accountState.selectedAddress: ", props.accountState.selectedAddress);
-        const currLoans =
-          await contractState.nftPawnShopContract.getLoans(props.accountState.selectedAddress);
+        const currLoans = await contractState.nftPawnShopContract.getLoans(
+          props.accountState.selectedAddress
+        );
         setLoans(currLoans);
-        console.log("this is loans: ", currLoans);
       } catch (e: any) {
         console.log("e", e);
       }
@@ -60,17 +61,22 @@ function MyLoans(props: Props) {
       status,
       index,
     ] = term;
-    const onClickClaim = async (status : number, index: any, borrower: string) => {
+    const onClickClaim = async (
+      status: number,
+      index: any,
+      borrower: string
+    ) => {
       const indexNum = index.toNumber();
       switch (statusText(status)) {
         case "Returned": {
           buttonLabel = "claim";
           try {
-            const tx = await props.contractState.nftPawnShopContract.paybackTerm(
-              borrower,
-              indexNum,
-              {from: props.accountState.selectedAddress}
-            );
+            const tx =
+              await props.contractState.nftPawnShopContract.paybackTerm(
+                borrower,
+                indexNum,
+                { from: props.accountState.selectedAddress }
+              );
             await tx.wait();
             console.log("Claimed returned payment!");
           } catch (e: any) {
@@ -81,10 +87,11 @@ function MyLoans(props: Props) {
         case "Defaulted": {
           buttonLabel = "claim collateral";
           try {
-            const tx = await props.contractState.nftPawnShopContract.claimCollateral(
-              indexNum,
-              {from: props.accountState.selectedAddress}
-            );
+            const tx =
+              await props.contractState.nftPawnShopContract.claimCollateral(
+                indexNum,
+                { from: props.accountState.selectedAddress }
+              );
             await tx.wait();
             console.log("Claimed collateral for default!");
           } catch (e: any) {
@@ -98,8 +105,8 @@ function MyLoans(props: Props) {
         }
         default: {
           buttonLabel = null;
-        } 
-      };
+        }
+      }
     };
     var buttonLabel;
     switch (statusText(status)) {
@@ -117,8 +124,8 @@ function MyLoans(props: Props) {
       }
       default: {
         buttonLabel = "";
-      } 
-    };
+      }
+    }
     return (
       <div key={i} style={{ paddingTop: "12px", paddingBottom: "12px" }}>
         <ListCardItem
@@ -173,14 +180,13 @@ function MyLoans(props: Props) {
 }
 
 const mapStateToProps = (state: any, ownProps: any) => ({
-    ...ownProps,
-    accountState: getAccountState(state),
-    contractState: getContractState(state),
-  });
-  
-  const mapDispatchToProps = (dispatch: any) => {
-    return {};
-  };
-  
-  export default connect(mapStateToProps, mapDispatchToProps)(MyLoans);
-  
+  ...ownProps,
+  accountState: getAccountState(state),
+  contractState: getContractState(state),
+});
+
+const mapDispatchToProps = (dispatch: any) => {
+  return {};
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(MyLoans);
