@@ -24,13 +24,6 @@ function MyLoans(props: Props) {
   const [loans, setLoans] = useState([]);
   const history = useHistory();
 
-  const onClickPawn = () => {
-    setShowDialog(!showDialog);
-  };
-  const onClose = () => {
-    setShowDialog(false);
-  };
-
   const { contractState } = props;
   useEffect(() => {
     const func = async () => {
@@ -109,6 +102,7 @@ function MyLoans(props: Props) {
           buttonLabel = null;
         }
       }
+      history.go(0);
     };
     let buttonLabel;
     switch (statusText(status)) {

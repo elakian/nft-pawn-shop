@@ -74,6 +74,7 @@ function Home(props: Props) {
         );
         await tx.wait();
         history.push("/loans");
+        history.go(0);
       } catch (e: any) {
         console.log("error", e);
       }
