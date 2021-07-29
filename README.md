@@ -32,3 +32,4 @@ Frontend
 Backend
 * More complicated loan structures
 * Other types of collateral 
+* Deploy to Mainnet
