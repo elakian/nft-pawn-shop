@@ -39,7 +39,7 @@ function MyPawnedNFTs(props: Props) {
       nftTokenID,
       amountInWei,
       interestRate,
-      _startTime,
+      startTime,
       duration,
       borrower,
       lender,
@@ -83,10 +83,17 @@ function MyPawnedNFTs(props: Props) {
     if (statusFormatted === "Active") {
       ctaLabel = "Pay";
       onClickCta = async () => {
+        const amountPlusInterest =
+          await contractState.nftPawnShopContract.calculatePayment(
+            amountInWei,
+            interestRate,
+            startTime
+          );
+        console.log("amountPlusInterest", amountPlusInterest);
         const tx = await contractState.nftPawnShopContract.paybackTerm(
           borrower,
           index,
-          { value: amountInWei }
+          { value: String(amountPlusInterest) }
         );
         await tx.wait();
       };

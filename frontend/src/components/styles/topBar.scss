@@ -4,8 +4,9 @@
   height: 64px;
   width: 100%;
   //   display: flex;
-  //   justify-content: space-between;
+  justify-content: space-between;
   //   align-items: center;
+  display: flex;
 }
 
 body {
@@ -18,4 +19,13 @@ body {
   font-size: 18px;
   padding-right: 36px;
   padding-left: 120px;
+}
+
+.top-bar-text {
+  font-size: 24px;
+  font-family: "Rubik", sans-serif;
+  font-weight: bold;
+  padding-left: 24px;
+  line-height: 64px;
+  color: #fd548f;
 }

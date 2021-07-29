@@ -14,21 +14,16 @@ interface Props {
 }
 
 function TopBar(props: Props) {
-  let connectButton = (
-    <div className="connect-wallet-button">
-      Connected!
-    </div>
-  );
+  let connectButton = <div className="connect-wallet-button">Connected!</div>;
   if (!props.accountState.selectedAddress) {
     connectButton = <ConnectWallet />;
   }
   return (
     <div className="top-bar">
+      <div className="top-bar-text">NFT Pawn Shop</div>
       <div
         style={{
           display: "flex",
-          justifyContent: "flex-end",
-          alignItems: "center",
         }}
       >
         <div style={{ paddingRight: "16px", paddingTop: "6px" }}>
